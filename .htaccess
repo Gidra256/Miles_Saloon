@@ -1,0 +1,18 @@
+Options +FollowSymLinks -MultiViews
+DirectoryIndex index.html index.php
+Order Allow,Deny
+Allow from all
+Require all granted
+
+<FilesMatch "\.php$">
+    Require all granted
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /milessalon/
+    
+    # Handle authorization headers
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule> 

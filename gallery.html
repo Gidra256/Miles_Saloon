@@ -10,11 +10,13 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Miles Salon</div>
+        <div class="logo">
+            <a href="index.html">Miles Salon</a>
+        </div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="gallery.html" class="active">Gallery</a></li>
             <li><a href="booking.html">Book Now</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -40,6 +42,7 @@
         </div>
 
         <div class="gallery-grid">
+            <!-- Original gallery images -->
             <a href="https://images.unsplash.com/photo-1560066984-138dadb4c035" 
                data-lightbox="salon-gallery" 
                data-title="Professional Haircut"
@@ -77,6 +80,47 @@
                 <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400" alt="Makeup">
                 <div class="gallery-overlay">
                     <span>Makeup</span>
+                </div>
+            </a>
+
+            <!-- Additional local images -->
+            <a href="images/barber1.jpg" 
+               data-lightbox="salon-gallery" 
+               data-title="Classic Men's Cut"
+               class="gallery-item haircuts">
+                <img src="images/barber1.jpg" alt="Classic Men's Cut">
+                <div class="gallery-overlay">
+                    <span>Classic Men's Cut</span>
+                </div>
+            </a>
+
+            <a href="images/barber2.jpg" 
+               data-lightbox="salon-gallery" 
+               data-title="Modern Styling"
+               class="gallery-item styling">
+                <img src="images/barber2.jpg" alt="Modern Styling">
+                <div class="gallery-overlay">
+                    <span>Modern Styling</span>
+                </div>
+            </a>
+
+            <a href="images/instra1.jpg" 
+               data-lightbox="salon-gallery" 
+               data-title="Hair Treatment"
+               class="gallery-item coloring">
+                <img src="images/instra1.jpg" alt="Hair Treatment">
+                <div class="gallery-overlay">
+                    <span>Hair Treatment</span>
+                </div>
+            </a>
+
+            <a href="images/instra2.jpg" 
+               data-lightbox="salon-gallery" 
+               data-title="Professional Makeup"
+               class="gallery-item makeup">
+                <img src="images/instra2.jpg" alt="Professional Makeup">
+                <div class="gallery-overlay">
+                    <span>Professional Makeup</span>
                 </div>
             </a>
         </div>
