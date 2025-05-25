@@ -3,101 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Payment - Miles Salon</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/payment.css">
+    <title>Payment - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
-        /* Fallback styles in case payment.css hasn't loaded */
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f7f7f7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        .payment-form {
+
+        .payment-container {
             background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .payment-methods {
-            margin: 20px 0;
-        }
-        .method {
-            margin: 15px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .details {
-            margin-top: 10px;
-            padding: 10px;
-            display: none;
-        }
-        .method.active .details {
-            display: block;
-        }
-        .phone-input {
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            max-width: 500px;
         }
-        #pay-button {
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .payment-header h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
             width: 100%;
             padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #card-element {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        #card-errors {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .payment-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .payment-summary h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .summary-total {
+            border-top: 2px solid #ddd;
+            margin-top: 10px;
+            padding-top: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
             background: #4CAF50;
             color: white;
             border: none;
             border-radius: 4px;
             font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .payment-methods {
+            margin-bottom: 30px;
+        }
+
+        .payment-method-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .method-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .method-option.active {
+            border-color: #4CAF50;
+            background: #f0f9f0;
+        }
+
+        .method-option i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .method-option.active i {
+            color: #4CAF50;
+        }
+
+        .method-option h3 {
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+        }
+
+        .payment-form-section {
+            display: none;
+        }
+
+        .payment-form-section.active {
+            display: block;
+        }
+
+        .currency-selector {
+            margin-bottom: 20px;
+        }
+
+        .currency-selector select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .mobile-money-note {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #856404;
+        }
+
+        .mobile-money-providers {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .provider-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             cursor: pointer;
         }
-        #pay-button:hover {
-            background: #45a049;
+
+        .provider-option.active {
+            border-color: #4CAF50;
+            background: #f0f9f0;
+        }
+
+        .provider-option img {
+            height: 40px;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="payment-form">
-            <h2>Complete Payment</h2>
-            
-            <div class="payment-summary">
-                <h3>Payment Summary</h3>
-                <div class="summary-details">
-                    <p>Service: <span id="service-name">Loading...</span></p>
-                    <p>Amount: <span id="amount">Loading...</span></p>
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1>Complete Your Payment</h1>
+            <p>Choose your preferred payment method</p>
+        </div>
+
+        <div class="payment-summary">
+            <h2>Order Summary</h2>
+            <div class="currency-selector">
+                <select id="currency-select" onchange="updateCurrency()">
+                    <option value="UGX">Ugandan Shilling (UGX)</option>
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">British Pound (GBP)</option>
+                </select>
+            </div>
+            <div class="summary-item">
+                <span id="service-name">Service Name</span>
+                <span id="service-price">UGX 0</span>
+            </div>
+            <div class="summary-item summary-total">
+                <span>Total</span>
+                <span id="total-amount">UGX 0</span>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <div class="payment-method-selector">
+                <div class="method-option" onclick="selectPaymentMethod('mobile-money')">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Money</h3>
+                    <p>MTN & Airtel</p>
+                </div>
+                <div class="method-option" onclick="selectPaymentMethod('card')">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Card Payment</h3>
+                    <p>International Cards</p>
                 </div>
             </div>
-            
-            <div class="payment-methods">
-                <div class="method">
-                    <input type="radio" id="cash" name="method" value="cash" checked>
-                    <label for="cash">Pay with Cash at Salon</label>
+        </div>
+
+        <!-- Mobile Money Payment Form -->
+        <div id="mobile-money-form" class="payment-form-section">
+            <div class="mobile-money-note">
+                <i class="fas fa-info-circle"></i>
+                You will receive a prompt on your phone to complete the payment
+            </div>
+
+            <div class="mobile-money-providers">
+                <div class="provider-option" onclick="selectProvider('mtn')">
+                    <img src="images/mtn-logo.png" alt="MTN Mobile Money">
+                    <h3>MTN Mobile Money</h3>
                 </div>
-                
-                <div class="method">
-                    <input type="radio" id="mtn" name="method" value="mtn">
-                    <label for="mtn">MTN Mobile Money</label>
-                    <div class="details" id="mtn-details">
-                        <input type="tel" placeholder="077xxxxxxx" class="phone-input" pattern="077[0-9]{7}" title="Please enter a valid MTN number starting with 077">
-                    </div>
-                </div>
-                
-                <div class="method">
-                    <input type="radio" id="airtel" name="method" value="airtel">
-                    <label for="airtel">Airtel Money</label>
-                    <div class="details" id="airtel-details">
-                        <input type="tel" placeholder="075xxxxxxx" class="phone-input" pattern="075[0-9]{7}" title="Please enter a valid Airtel number starting with 075">
-                    </div>
+                <div class="provider-option" onclick="selectProvider('airtel')">
+                    <img src="images/airtel-logo.png" alt="Airtel Money">
+                    <h3>Airtel Money</h3>
                 </div>
             </div>
-            
-            <button id="pay-button">Complete Payment</button>
+
+            <form id="mobile-money-payment-form">
+                <div class="form-group">
+                    <label for="phone-number">Phone Number</label>
+                    <input type="tel" id="phone-number" placeholder="077xxxxxxx or 075xxxxxxx" required>
+                </div>
+                <button type="submit">Pay with Mobile Money</button>
+            </form>
+        </div>
+
+        <!-- Card Payment Form -->
+        <div id="card-payment-form" class="payment-form-section">
+            <form id="payment-form">
+                <input type="hidden" id="service-id" value="">
+                <input type="hidden" id="amount" value="">
+                
+                <div class="form-group">
+                    <label for="customer-name">Full Name</label>
+                    <input type="text" id="customer-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="customer-email">Email</label>
+                    <input type="email" id="customer-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="card-element">Credit or Debit Card</label>
+                    <div id="card-element"></div>
+                    <div id="card-errors" role="alert"></div>
+                </div>
+
+                <button type="submit">Pay with Card</button>
+            </form>
+        </div>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>Processing your payment...</p>
         </div>
     </div>
 
-    <script src="/js/payment.js"></script>
+    <script src="js/payment.js"></script>
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceId = urlParams.get('service');
+        const serviceName = urlParams.get('name');
+        const amount = urlParams.get('amount');
+
+        // Update the form with service details
+        document.getElementById('service-id').value = serviceId;
+        document.getElementById('amount').value = amount;
+        document.getElementById('service-name').textContent = serviceName;
+        document.getElementById('service-price').textContent = `UGX ${(amount / 100).toFixed(2)}`;
+        document.getElementById('total-amount').textContent = `UGX ${(amount / 100).toFixed(2)}`;
+    </script>
 </body>
 </html> 
