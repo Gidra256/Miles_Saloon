@@ -1,0 +1,72 @@
+{
+    "staff": {
+        "barbers": [
+            { "id": 1, "name": "Julius", "role": "Senior Barber", "image": "../images/staff/julius.jpg" },
+            { "id": 2, "name": "Simon", "role": "Expert Barber", "image": "../images/staff/simon.jpg" },
+            { "id": 3, "name": "Emma", "role": "Barber", "image": "../images/staff/emma.jpg" },
+            { "id": 4, "name": "Rasta", "role": "Dreadlock Specialist", "image": "../images/staff/rasta.jpg" }
+        ],
+        "ladies": [
+            { "id": 5, "name": "Joy", "role": "Hair Stylist", "image": "../images/staff/joy.jpg" }
+        ],
+        "nails": [
+            { "id": 6, "name": "Michael", "role": "Nail Technician", "image": "../images/staff/michael.jpg" },
+            { "id": 7, "name": "Justine", "role": "Nail Artist", "image": "../images/staff/justine.jpg" },
+            { "id": 8, "name": "Rony", "role": "Nail Specialist", "image": "../images/staff/rony.jpg" },
+            { "id": 9, "name": "Angella", "role": "Nail Care Expert", "image": "../images/staff/angella.jpg" }
+        ]
+    },
+    "services": [
+        {
+            "id": 1,
+            "name": "Haircut & Styling",
+            "price": 30,
+            "description": "Professional haircut and styling services for all hair types"
+        },
+        {
+            "id": 2,
+            "name": "Hair Coloring",
+            "price": 75,
+            "description": "Full color, highlights, balayage, and other coloring services"
+        },
+        {
+            "id": 3,
+            "name": "Hair Treatment",
+            "price": 50,
+            "description": "Deep conditioning, keratin treatment, and hair repair services"
+        }
+    ],
+    "bookings": [
+        {
+            "id": 1,
+            "date": "2024-03-20",
+            "time": "10:00",
+            "clientName": "John Doe",
+            "clientEmail": "john@example.com",
+            "clientPhone": "+1234567890",
+            "service": "Haircut & Styling",
+            "stylist": "Sarah Johnson",
+            "status": "confirmed",
+            "notes": "First time client"
+        }
+    ],
+    "settings": {
+        "business": {
+            "name": "Miles Unisex Salon",
+            "address": "123 Main Street, City, Country",
+            "phone": "+1234567890",
+            "email": "contact@milessalon.com"
+        },
+        "hours": {
+            "weekday": { "open": "09:00", "close": "18:00" },
+            "saturday": { "open": "10:00", "close": "17:00" },
+            "sunday": { "open": "11:00", "close": "16:00" }
+        },
+        "booking": {
+            "timeSlotDuration": 30,
+            "maxAdvanceBooking": 30,
+            "minAdvanceBooking": 2,
+            "multipleServices": true
+        }
+    }
+} 

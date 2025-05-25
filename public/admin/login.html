@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Miles Unisex Salon</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -15,19 +16,21 @@
 
         body {
             background: #f5f5f5;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/salon-bg.jpg');
+            background-size: cover;
+            background-position: center;
         }
 
         .login-container {
             background: white;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            width: 100%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 90%;
             max-width: 400px;
         }
 
@@ -36,15 +39,61 @@
             margin-bottom: 30px;
         }
 
-        .login-header h1 {
+        .login-header img {
+            width: 120px;
+            margin-bottom: 15px;
+        }
+
+        .login-header h2 {
             color: #333;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 10px;
         }
 
-        .login-header img {
-            width: 120px;
-            margin-bottom: 20px;
+        .login-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step.active {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 50%;
+            left: calc(50% - 50px);
+            right: calc(50% - 50px);
+            height: 2px;
+            background: #f0f0f0;
+            transform: translateY(-50%);
+        }
+
+        .step-line.half {
+            right: 50%;
+            background: #ff4d4d;
         }
 
         .form-group {
@@ -55,6 +104,7 @@
             display: block;
             margin-bottom: 5px;
             color: #666;
+            font-weight: 500;
         }
 
         .form-group input {
@@ -67,8 +117,8 @@
         }
 
         .form-group input:focus {
-            outline: none;
             border-color: #ff4d4d;
+            outline: none;
         }
 
         .login-btn {
@@ -89,25 +139,61 @@
 
         .error-message {
             color: #ff4d4d;
-            text-align: center;
+            font-size: 0.9rem;
             margin-top: 10px;
+            text-align: center;
             display: none;
         }
 
-        .back-to-site {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .back-to-site a {
-            color: #666;
-            text-decoration: none;
+        .success-message {
+            color: #28a745;
             font-size: 0.9rem;
-            transition: color 0.3s;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
         }
 
-        .back-to-site a:hover {
+        .code-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .code-input input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .resend-code {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .resend-code button {
+            background: none;
+            border: none;
             color: #ff4d4d;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+
+        .verification-step {
+            display: none;
+        }
+
+        .verification-step.active {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -115,43 +201,236 @@
     <div class="login-container">
         <div class="login-header">
             <img src="../images/logo.png" alt="Miles Salon Logo">
-            <h1>Admin Login</h1>
+            <h2>Admin Login</h2>
+            <p>Two-step verification required</p>
         </div>
-        <form id="loginForm">
+
+        <div class="step-indicator">
+            <div class="step-line"></div>
+            <div class="step active" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+        </div>
+
+        <!-- Step 1: Password Verification -->
+        <form id="password-step" class="verification-step active" onsubmit="handlePasswordVerification(event)">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" required>
             </div>
-            <button type="submit" class="login-btn">Login</button>
-            <div id="errorMessage" class="error-message">Invalid username or password</div>
+            <button type="submit" class="login-btn">Continue to Step 2</button>
+            <div class="error-message" id="passwordError">Invalid username or password</div>
         </form>
-        <div class="back-to-site">
-            <a href="../index.html">← Back to Main Site</a>
-        </div>
+
+        <!-- Step 2: Email Code Verification -->
+        <form id="code-step" class="verification-step" onsubmit="handleCodeVerification(event)">
+            <div class="form-group">
+                <label>Verification Code</label>
+                <p class="success-message" style="display: block; margin-bottom: 15px;">
+                    A verification code has been sent to:<br>
+                    <strong>gideoneumu@gmail.com</strong>
+                </p>
+                <div id="codeMessage" class="success-message" style="display: block; margin-bottom: 15px; background: #f8f9fa; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
+                    For demo purposes, your code is: <span id="demoCode" style="font-size: 1.2em; font-weight: bold; color: #ff4d4d;"></span>
+                </div>
+                <div class="code-input">
+                    <input type="text" maxlength="1" class="code-digit" required>
+                    <input type="text" maxlength="1" class="code-digit" required>
+                    <input type="text" maxlength="1" class="code-digit" required>
+                    <input type="text" maxlength="1" class="code-digit" required>
+                </div>
+            </div>
+            <button type="submit" class="login-btn">Verify & Login</button>
+            <div class="error-message" id="codeError"></div>
+            <div class="resend-code">
+                <button type="button" onclick="resendCode()">Resend Code</button>
+            </div>
+        </form>
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Admin credentials (in a real application, these would be stored securely on the server)
+        const adminCredentials = {
+            username: 'admin',
+            password: 'admin123',
+            email: 'gideoneumu@gmail.com'  // Updated admin email
+        };
+
+        let verificationCode = '';
+        let codeExpiry = null;
+
+        function showStep(stepNumber) {
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.toggle('active', index < stepNumber);
+            });
+
+            // Update progress line
+            const stepLine = document.querySelector('.step-line');
+            if (stepNumber === 2) {
+                stepLine.classList.add('half');
+            } else {
+                stepLine.classList.remove('half');
+            }
+
+            // Show appropriate form
+            document.querySelectorAll('.verification-step').forEach((step, index) => {
+                step.classList.toggle('active', index === stepNumber - 1);
+            });
+        }
+
+        function handlePasswordVerification(event) {
+            event.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('passwordError');
 
-            // For demonstration, using a simple check
-            // In production, this should be replaced with proper authentication
-            if (username === 'admin' && password === 'admin123') {
-                // Store authentication state
-                sessionStorage.setItem('adminAuthenticated', 'true');
-                // Redirect to admin dashboard
-                window.location.href = 'dashboard.html';
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                // Generate verification code
+                verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
+                codeExpiry = new Date(Date.now() + 5 * 60000); // 5 minutes expiry
+
+                // Display the code for demo purposes
+                document.getElementById('demoCode').textContent = verificationCode;
+                
+                // Simulate email sending
+                simulateEmailSending();
+
+                // Move to step 2
+                showStep(2);
+                setupCodeInputs();
             } else {
-                document.getElementById('errorMessage').style.display = 'block';
+                errorMessage.style.display = 'block';
             }
-        });
+        }
+
+        function simulateEmailSending() {
+            const btn = document.querySelector('#code-step .login-btn');
+            const originalText = btn.textContent;
+            
+            // Show sending state
+            btn.textContent = 'Sending email...';
+            btn.disabled = true;
+
+            // Simulate email sending delay
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                
+                // Show toast notification
+                showToast('Verification code sent successfully!');
+            }, 1500);
+        }
+
+        function showToast(message) {
+            // Create toast element if it doesn't exist
+            let toast = document.getElementById('toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                document.body.appendChild(toast);
+            }
+
+            // Add styles to toast
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 1000;
+                transition: opacity 0.3s, transform 0.3s;
+                opacity: 0;
+                transform: translateY(-20px);
+            `;
+
+            // Show message
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+            }, 3000);
+        }
+
+        function setupCodeInputs() {
+            const inputs = document.querySelectorAll('.code-digit');
+            
+            inputs.forEach((input, index) => {
+                input.value = ''; // Clear any previous input
+                input.addEventListener('keyup', (e) => {
+                    if (e.key >= 0 && e.key <= 9) {
+                        if (index < inputs.length - 1) {
+                            inputs[index + 1].focus();
+                        }
+                    } else if (e.key === 'Backspace') {
+                        if (index > 0) {
+                            inputs[index - 1].focus();
+                        }
+                    }
+                });
+            });
+
+            // Focus first input
+            inputs[0].focus();
+        }
+
+        function handleCodeVerification(event) {
+            event.preventDefault();
+            
+            const inputs = document.querySelectorAll('.code-digit');
+            const enteredCode = Array.from(inputs).map(input => input.value).join('');
+            const errorMessage = document.getElementById('codeError');
+
+            if (new Date() > codeExpiry) {
+                errorMessage.textContent = 'Verification code has expired. Please request a new code.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (enteredCode === verificationCode) {
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                window.location.href = 'index.html';
+            } else {
+                errorMessage.textContent = 'Invalid verification code';
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        function resendCode() {
+            // Generate new code
+            verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
+            codeExpiry = new Date(Date.now() + 5 * 60000); // 5 minutes expiry
+
+            // Update displayed code
+            document.getElementById('demoCode').textContent = verificationCode;
+
+            // Clear previous inputs and error
+            document.querySelectorAll('.code-digit').forEach(input => input.value = '');
+            document.getElementById('codeError').style.display = 'none';
+
+            // Simulate email sending
+            simulateEmailSending();
+
+            // Focus first input
+            document.querySelector('.code-digit').focus();
+        }
+
+        // Clear any existing authentication on page load
+        window.onload = function() {
+            sessionStorage.removeItem('adminAuthenticated');
+            showStep(1);
+        };
     </script>
 </body>
 </html> 

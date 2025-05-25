@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sidebar-header img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Settings Specific Styles */
+        .settings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .settings-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .settings-card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-card h2 i {
+            color: #ff4d4d;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .save-btn:hover {
+            background: #ff3333;
+        }
+
+        .color-picker {
+            width: 100%;
+            height: 40px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #ff4d4d;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .sidebar-header h2,
+            .nav-link span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .settings-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.png" alt="Miles Salon Logo">
+            <h2>Admin Panel</h2>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Bookings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="services.html" class="nav-link">
+                    <i class="fas fa-cut"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="staff.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Staff</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="gallery.html" class="nav-link">
+                    <i class="fas fa-images"></i>
+                    <span>Gallery</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link active">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Settings</h1>
+            <div class="user-menu">
+                <img src="../images/admin-profile.jpg" alt="Admin Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <div class="settings-container">
+            <!-- Business Information -->
+            <div class="settings-card">
+                <h2><i class="fas fa-building"></i> Business Information</h2>
+                <form id="businessForm" onsubmit="saveSettings(event, 'business')">
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessAddress">Address</label>
+                        <textarea id="businessAddress" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessPhone">Phone</label>
+                        <input type="tel" id="businessPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessEmail">Email</label>
+                        <input type="email" id="businessEmail" required>
+                    </div>
+                    <button type="submit" class="save-btn">Save Business Information</button>
+                </form>
+            </div>
+
+            <!-- Working Hours -->
+            <div class="settings-card">
+                <h2><i class="fas fa-clock"></i> Working Hours</h2>
+                <form id="hoursForm" onsubmit="saveSettings(event, 'hours')">
+                    <div class="form-group">
+                        <label>Monday - Friday</label>
+                        <div class="time-grid">
+                            <input type="time" id="weekdayOpen" required>
+                            <input type="time" id="weekdayClose" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Saturday</label>
+                        <div class="time-grid">
+                            <input type="time" id="saturdayOpen" required>
+                            <input type="time" id="saturdayClose" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Sunday</label>
+                        <div class="time-grid">
+                            <input type="time" id="sundayOpen" required>
+                            <input type="time" id="sundayClose" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="save-btn">Save Working Hours</button>
+                </form>
+            </div>
+
+            <!-- Booking Settings -->
+            <div class="settings-card">
+                <h2><i class="fas fa-calendar-check"></i> Booking Settings</h2>
+                <form id="bookingForm" onsubmit="saveSettings(event, 'booking')">
+                    <div class="form-group">
+                        <label for="timeSlotDuration">Time Slot Duration (minutes)</label>
+                        <select id="timeSlotDuration" required>
+                            <option value="15">15 minutes</option>
+                            <option value="30">30 minutes</option>
+                            <option value="45">45 minutes</option>
+                            <option value="60">60 minutes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxAdvanceBooking">Maximum Advance Booking (days)</label>
+                        <input type="number" id="maxAdvanceBooking" min="1" max="90" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="minAdvanceBooking">Minimum Notice Required (hours)</label>
+                        <input type="number" id="minAdvanceBooking" min="1" max="48" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Allow Multiple Services per Booking</label>
+                        <label class="switch">
+                            <input type="checkbox" id="multipleServices">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <button type="submit" class="save-btn">Save Booking Settings</button>
+                </form>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="settings-card">
+                <h2><i class="fas fa-bell"></i> Notification Settings</h2>
+                <form id="notificationForm" onsubmit="saveSettings(event, 'notifications')">
+                    <div class="form-group">
+                        <label>Email Notifications</label>
+                        <label class="switch">
+                            <input type="checkbox" id="emailNotifications">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>SMS Notifications</label>
+                        <label class="switch">
+                            <input type="checkbox" id="smsNotifications">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminderTime">Booking Reminder Time</label>
+                        <select id="reminderTime" required>
+                            <option value="1">1 hour before</option>
+                            <option value="2">2 hours before</option>
+                            <option value="24">24 hours before</option>
+                            <option value="48">48 hours before</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="save-btn">Save Notification Settings</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">Settings saved successfully!</div>
+
+    <script>
+        // Check authentication
+        function checkAuth() {
+            if (!sessionStorage.getItem('adminAuthenticated')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize settings from localStorage or use default values
+        const defaultSettings = {
+            business: {
+                name: 'Miles Unisex Salon',
+                address: '123 Main Street, City, Country',
+                phone: '+1234567890',
+                email: 'contact@milessalon.com'
+            },
+            hours: {
+                weekday: { open: '09:00', close: '18:00' },
+                saturday: { open: '10:00', close: '17:00' },
+                sunday: { open: '11:00', close: '16:00' }
+            },
+            booking: {
+                timeSlotDuration: 30,
+                maxAdvanceBooking: 30,
+                minAdvanceBooking: 2,
+                multipleServices: true
+            },
+            notifications: {
+                email: true,
+                sms: false,
+                reminderTime: 24
+            }
+        };
+
+        let settings = JSON.parse(localStorage.getItem('salonSettings')) || defaultSettings;
+
+        // Load settings into forms
+        function loadSettings() {
+            // Business Information
+            document.getElementById('businessName').value = settings.business.name;
+            document.getElementById('businessAddress').value = settings.business.address;
+            document.getElementById('businessPhone').value = settings.business.phone;
+            document.getElementById('businessEmail').value = settings.business.email;
+
+            // Working Hours
+            document.getElementById('weekdayOpen').value = settings.hours.weekday.open;
+            document.getElementById('weekdayClose').value = settings.hours.weekday.close;
+            document.getElementById('saturdayOpen').value = settings.hours.saturday.open;
+            document.getElementById('saturdayClose').value = settings.hours.saturday.close;
+            document.getElementById('sundayOpen').value = settings.hours.sunday.open;
+            document.getElementById('sundayClose').value = settings.hours.sunday.close;
+
+            // Booking Settings
+            document.getElementById('timeSlotDuration').value = settings.booking.timeSlotDuration;
+            document.getElementById('maxAdvanceBooking').value = settings.booking.maxAdvanceBooking;
+            document.getElementById('minAdvanceBooking').value = settings.booking.minAdvanceBooking;
+            document.getElementById('multipleServices').checked = settings.booking.multipleServices;
+
+            // Notification Settings
+            document.getElementById('emailNotifications').checked = settings.notifications.email;
+            document.getElementById('smsNotifications').checked = settings.notifications.sms;
+            document.getElementById('reminderTime').value = settings.notifications.reminderTime;
+        }
+
+        // Save settings
+        function saveSettings(event, section) {
+            event.preventDefault();
+
+            switch(section) {
+                case 'business':
+                    settings.business = {
+                        name: document.getElementById('businessName').value,
+                        address: document.getElementById('businessAddress').value,
+                        phone: document.getElementById('businessPhone').value,
+                        email: document.getElementById('businessEmail').value
+                    };
+                    break;
+
+                case 'hours':
+                    settings.hours = {
+                        weekday: {
+                            open: document.getElementById('weekdayOpen').value,
+                            close: document.getElementById('weekdayClose').value
+                        },
+                        saturday: {
+                            open: document.getElementById('saturdayOpen').value,
+                            close: document.getElementById('saturdayClose').value
+                        },
+                        sunday: {
+                            open: document.getElementById('sundayOpen').value,
+                            close: document.getElementById('sundayClose').value
+                        }
+                    };
+                    break;
+
+                case 'booking':
+                    settings.booking = {
+                        timeSlotDuration: parseInt(document.getElementById('timeSlotDuration').value),
+                        maxAdvanceBooking: parseInt(document.getElementById('maxAdvanceBooking').value),
+                        minAdvanceBooking: parseInt(document.getElementById('minAdvanceBooking').value),
+                        multipleServices: document.getElementById('multipleServices').checked
+                    };
+                    break;
+
+                case 'notifications':
+                    settings.notifications = {
+                        email: document.getElementById('emailNotifications').checked,
+                        sms: document.getElementById('smsNotifications').checked,
+                        reminderTime: parseInt(document.getElementById('reminderTime').value)
+                    };
+                    break;
+            }
+
+            // Save to localStorage
+            localStorage.setItem('salonSettings', JSON.stringify(settings));
+            
+            // Show notification
+            showNotification();
+        }
+
+        // Show notification
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize page
+        window.onload = function() {
+            checkAuth();
+            loadSettings();
+        };
+    </script>
+</body>
+</html> 
