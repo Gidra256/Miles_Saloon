@@ -761,262 +761,43 @@
             font-weight: 500;
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+        .total-amount {
+            text-align: right;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
         }
 
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        /* Enhanced Dropdown Styles */
-        .custom-select {
-            position: relative;
-            width: 100%;
-        }
-
-        .custom-select select {
-            display: none;
-        }
-
-        .select-selected {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 12px;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .select-selected:after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 6px solid #666;
-            margin-left: 10px;
-            transition: transform 0.3s;
-        }
-
-        .select-selected.select-arrow-active:after {
-            transform: rotate(180deg);
-        }
-
-        .select-items {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            z-index: 99;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 5px 5px;
-            max-height: 250px;
-            overflow-y: auto;
-            display: none;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .select-items div {
-            padding: 12px;
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.3s;
-        }
-
-        .select-items div:hover {
-            background-color: #f8f8f8;
-        }
-
-        .select-items div.same-as-selected {
-            background-color: #f0f0f0;
-        }
-
-        .select-hide {
-            display: none;
-        }
-
-        /* Service Item Style */
-        .service-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .service-option:last-child {
-            border-bottom: none;
-        }
-
-        .service-info {
-            flex-grow: 1;
-        }
-
-        .service-name {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .service-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        .service-price {
-            font-weight: 600;
+        #totalAmount {
             color: #ff4d4d;
-            margin-left: 15px;
+            font-weight: bold;
+            font-size: 18px;
         }
 
-        /* Staff Item Style */
-        .staff-option {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .staff-option:last-child {
-            border-bottom: none;
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
         }
 
-        .staff-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 12px;
-            object-fit: cover;
+        .alert-info {
+            background: #e3f2fd;
+            color: #0d47a1;
+            border: 1px solid #bbdefb;
         }
 
-        .staff-info {
-            flex-grow: 1;
+        .alert i {
+            margin-right: 10px;
         }
 
-        .staff-name {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .staff-specialization {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 2px;
-        }
-
-        /* Gallery Categories Styles */
-        .gallery-categories {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .category-btn {
-            padding: 10px 20px;
-            border: none;
-            background: #f5f5f5;
-            color: #333;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .category-btn:hover {
-            background: #ff4d4d;
-            color: white;
-        }
-
-        .category-btn.active {
-            background: #ff4d4d;
-            color: white;
-        }
-
-        .gallery-item {
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-item.hidden {
-            opacity: 0;
-            display: none;
-        }
-
-        /* Lightbox customization */
-        .lightbox-overlay {
-            background: rgba(0, 0, 0, 0.9);
-        }
-
-        .lb-data .lb-caption {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: white;
-        }
-
-        .lb-data .lb-number {
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-
-        .nav-link {
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #ff4d4d;
-            transition: width 0.3s;
-        }
-
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            color: #ff4d4d !important;
+        .booking-form textarea:focus {
+            outline: none;
+            border-color: #ff4d4d;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1213,7 +994,17 @@
                 <label for="notes">Notes (Optional)</label>
                 <input type="text" id="notes">
             </div>
-            <button type="submit" class="btn">Book Appointment</button>
+
+            <!-- Booking Summary -->
+            <div class="booking-summary" id="bookingSummary">
+                <h3>Booking Summary</h3>
+                <div id="summaryDetails"></div>
+                <div class="total-amount">
+                    <h4>Total Amount: <span id="totalAmount">UGX 0</span></h4>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Confirm Booking & Proceed to Payment</button>
         </form>
     </section>
 
@@ -1370,6 +1161,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Miles Salon. All rights reserved.</p>
+            <a href="/public/admin/login.html" style="color: #666; font-size: 12px; text-decoration: none; opacity: 0.7; margin-top: 10px; display: inline-block;">Admin</a>
         </div>
     </footer>
 
@@ -1383,7 +1175,14 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="js/dataService.js"></script>
     <script>
+        let selectedPaymentMethod = null;
+        let selectedProvider = null;
+        let stripe = null;
+        let card = null;
+
         // Static Data
         const services = [
             {
@@ -1699,6 +1498,194 @@
             // Initial check for active link
             updateActiveLink();
         });
+
+        // Payment method selection
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-method="${method}"]`).classList.add('selected');
+            
+            // Show/hide relevant details
+            document.querySelectorAll('.payment-details').forEach(details => {
+                details.classList.remove('active');
+            });
+            document.getElementById(`${method}-details`).classList.add('active');
+
+            // Initialize Stripe if card payment is selected
+            if (method === 'card' && !stripe) {
+                initializeStripe();
+            }
+        }
+
+        // Mobile money provider selection
+        function selectProvider(provider) {
+            selectedProvider = provider;
+            
+            document.querySelectorAll('.provider-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-provider="${provider}"]`).classList.add('selected');
+        }
+
+        // Initialize Stripe
+        function initializeStripe() {
+            fetch('/api/stripe-key')
+                .then(response => response.json())
+                .then(data => {
+                    stripe = Stripe(data.publishableKey);
+                    const elements = stripe.elements();
+                    card = elements.create('card');
+                    card.mount('#card-element');
+
+                    card.addEventListener('change', function(event) {
+                        const displayError = document.getElementById('card-errors');
+                        if (event.error) {
+                            displayError.textContent = event.error.message;
+                        } else {
+                            displayError.textContent = '';
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading Stripe:', error);
+                });
+        }
+
+        // Update total amount when service is selected
+        document.getElementById('service_id').addEventListener('change', function() {
+            const selectedService = services.find(s => s._id === this.value);
+            const totalAmountSpan = document.getElementById('totalAmount');
+            
+            if (selectedService) {
+                totalAmountSpan.textContent = `UGX ${selectedService.price.toLocaleString()}`;
+                updateBookingSummary();
+            } else {
+                totalAmountSpan.textContent = 'UGX 0';
+            }
+        });
+
+        // Update booking summary
+        function updateBookingSummary() {
+            const summary = document.getElementById('bookingSummary');
+            const details = document.getElementById('summaryDetails');
+            const name = document.getElementById('name').value;
+            const service = services.find(s => s._id === document.getElementById('service_id').value);
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            
+            if (service) {
+                details.innerHTML = `
+                    <p><strong>Name:</strong> ${name || 'Not specified'}</p>
+                    <p><strong>Service:</strong> ${service.name}</p>
+                    <p><strong>Date:</strong> ${date ? new Date(date).toLocaleDateString() : 'Not specified'}</p>
+                    <p><strong>Time:</strong> ${time || 'Not specified'}</p>
+                `;
+                summary.classList.add('active');
+            }
+        }
+
+        // Update summary when form fields change
+        ['name', 'service_id', 'date', 'time'].forEach(id => {
+            document.getElementById(id).addEventListener('change', updateBookingSummary);
+        });
+
+        // Handle form submission
+        document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                if (!selectedPaymentMethod) {
+                    throw new Error('Please select a payment method');
+                }
+
+                const formData = new FormData(this);
+                const bookingData = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    service_id: parseInt(formData.get('service_id')),
+                    stylist_id: parseInt(formData.get('stylist_id')),
+                    date: formData.get('date'),
+                    time: document.querySelector('.time-slot.selected')?.textContent,
+                    notes: formData.get('notes') || '',
+                    paymentMethod: selectedPaymentMethod,
+                    provider: selectedProvider,
+                    status: 'pending',
+                    created_at: new Date().toISOString()
+                };
+
+                // Save booking
+                const booking = dataService.addBooking(bookingData);
+
+                // Handle payment based on selected method
+                switch (selectedPaymentMethod) {
+                    case 'mobile-money':
+                        window.location.href = `/payment.html?method=mobile-money&provider=${selectedProvider}&booking=${booking.id}`;
+                        break;
+                    
+                    case 'card':
+                        const { paymentMethod, error } = await stripe.createPaymentMethod({
+                            type: 'card',
+                            card: card,
+                            billing_details: {
+                                name: bookingData.name,
+                                email: bookingData.email
+                            }
+                        });
+
+                        if (error) {
+                            throw error;
+                        }
+
+                        window.location.href = `/payment.html?method=card&payment_method=${paymentMethod.id}&booking=${booking.id}`;
+                        break;
+                    
+                    case 'cash':
+                        showBookingConfirmation(booking);
+                        break;
+                }
+
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        function showBookingConfirmation(booking) {
+            const summary = document.getElementById('bookingSummary');
+            const details = document.getElementById('summaryDetails');
+            
+            details.innerHTML = `
+                <p><strong>Booking Reference:</strong> ${booking.id}</p>
+                <p><strong>Service:</strong> ${booking.service.name}</p>
+                <p><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString()}</p>
+                <p><strong>Time:</strong> ${booking.time}</p>
+                <p><strong>Payment Method:</strong> ${
+                    booking.paymentMethod === 'mobile-money' ? 
+                    `${booking.provider.toUpperCase()} Mobile Money` :
+                    booking.paymentMethod === 'card' ? 'Card Payment' : 'Cash (Pay at salon)'
+                }</p>
+                <p><strong>Amount Due:</strong> UGX ${booking.service.price.toLocaleString()}</p>
+                ${booking.paymentMethod === 'mobile-money' ? `
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle"></i>
+                    Please check your phone for the payment prompt on ${booking.provider.toUpperCase()}.<br>
+                    Dial ${booking.provider === 'mtn' ? '*165#' : '*185#'} if you don't receive the prompt.
+                </div>
+                ` : booking.paymentMethod === 'cash' ? `
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle"></i>
+                    Please arrive 10 minutes before your appointment and make the payment at the reception.
+                </div>
+                ` : ''}
+            `;
+            
+            summary.classList.add('active');
+            summary.scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
 </body>
 </html>

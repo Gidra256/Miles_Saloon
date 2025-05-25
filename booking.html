@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="js/dataService.js"></script>
     <style>
         /* Booking page specific styles */
         .booking-page {
@@ -247,9 +248,7 @@
                 </div>
                 <div class="form-group">
                     <label for="time">Time</label>
-                    <div class="time-slots" id="timeSlots">
-                        <!-- Time slots will be populated by JavaScript -->
-                    </div>
+                    <input type="time" id="time" required>
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes (Optional)</label>
@@ -439,50 +438,64 @@
             document.querySelector(`[data-provider="${provider}"]`).classList.add('selected');
         }
 
-        // Load services and staff
-        function loadServices() {
+        // Load services
+        async function loadServices() {
+            await dataService.initialize();
+            const services = dataService.getServices();
             const serviceSelect = document.getElementById('service_id');
             serviceSelect.innerHTML = '<option value="">Select a service</option>';
             services.forEach(service => {
                 const option = document.createElement('option');
-                option.value = service._id;
+                option.value = service.id;
                 option.textContent = `${service.name} - UGX ${service.price.toLocaleString()}`;
                 serviceSelect.appendChild(option);
             });
+
+            // Add change event listener to update total amount
+            serviceSelect.addEventListener('change', updateTotalAmount);
         }
 
+        // Load staff
         function loadStaff() {
+            const staff = dataService.getAllStaffArray();
             const stylistSelect = document.getElementById('stylist_id');
             stylistSelect.innerHTML = '<option value="">Select a stylist</option>';
-            staff.forEach(person => {
-                const option = document.createElement('option');
-                option.value = person._id;
-                option.textContent = `${person.name} - ${person.specialization}`;
-                stylistSelect.appendChild(option);
+            
+            // Group staff by their roles
+            const staffByRole = staff.reduce((acc, person) => {
+                const category = person.role.includes('Nail') ? 'Nail Care' :
+                               person.role.includes('Barber') ? 'Barber Section' : 'Ladies Hair';
+                if (!acc[category]) acc[category] = [];
+                acc[category].push(person);
+                return acc;
+            }, {});
+
+            // Create option groups
+            Object.entries(staffByRole).forEach(([category, members]) => {
+                const group = document.createElement('optgroup');
+                group.label = category;
+                
+                members.forEach(person => {
+                    const option = document.createElement('option');
+                    option.value = person.id;
+                    option.textContent = `${person.name} - ${person.specialization}`;
+                    group.appendChild(option);
+                });
+                
+                stylistSelect.appendChild(group);
             });
         }
 
-        // Generate time slots
-        function generateTimeSlots() {
-            const timeSlots = document.getElementById('timeSlots');
-            const startTime = 9; // 9 AM
-            const endTime = 20; // 8 PM
-
-            for (let hour = startTime; hour < endTime; hour++) {
-                for (let minute of ['00', '30']) {
-                    const timeSlot = document.createElement('div');
-                    timeSlot.className = 'time-slot';
-                    const time = `${hour.toString().padStart(2, '0')}:${minute}`;
-                    timeSlot.textContent = time;
-                    timeSlot.addEventListener('click', () => {
-                        document.querySelectorAll('.time-slot').forEach(slot => {
-                            slot.classList.remove('selected');
-                        });
-                        timeSlot.classList.add('selected');
-                        document.getElementById('time').value = time;
-                    });
-                    timeSlots.appendChild(timeSlot);
-                }
+        // Update total amount when service is selected
+        function updateTotalAmount() {
+            const serviceSelect = document.getElementById('service_id');
+            const totalAmountSpan = document.getElementById('totalAmount');
+            const selectedService = dataService.getServiceById(parseInt(serviceSelect.value));
+            
+            if (selectedService) {
+                totalAmountSpan.textContent = `UGX ${selectedService.price.toLocaleString()}`;
+            } else {
+                totalAmountSpan.textContent = 'UGX 0';
             }
         }
 
@@ -500,62 +513,27 @@
                     name: formData.get('name'),
                     email: formData.get('email'),
                     phone: formData.get('phone'),
-                    service: formData.get('service_id'),
-                    stylist: formData.get('stylist_id'),
+                    service_id: parseInt(formData.get('service_id')),
+                    stylist_id: parseInt(formData.get('stylist_id')),
                     date: formData.get('date'),
-                    time: document.querySelector('.time-slot.selected')?.textContent,
+                    time: formData.get('time'),
                     notes: formData.get('notes') || '',
                     paymentMethod: selectedPaymentMethod,
-                    provider: selectedProvider
+                    provider: selectedProvider,
+                    status: 'pending',
+                    created_at: new Date().toISOString()
                 };
 
-                // Validate required fields
-                const requiredFields = ['name', 'email', 'phone', 'service', 'stylist', 'date', 'time'];
-                const missingFields = requiredFields.filter(field => !bookingData[field]);
-                if (missingFields.length > 0) {
-                    throw new Error(`Please fill in all required fields: ${missingFields.join(', ')}`);
-                }
-
-                // Validate payment method specific fields
-                if (selectedPaymentMethod === 'mobile-money') {
-                    if (!selectedProvider) {
-                        throw new Error('Please select a mobile money provider');
-                    }
-                    const phoneNumber = document.getElementById('mobile-number').value;
-                    const mtnPattern = /^077\d{7}$/;
-                    const airtelPattern = /^075\d{7}$/;
-                    
-                    if (selectedProvider === 'mtn' && !mtnPattern.test(phoneNumber)) {
-                        throw new Error('Please enter a valid MTN number (format: 077XXXXXXX)');
-                    }
-                    if (selectedProvider === 'airtel' && !airtelPattern.test(phoneNumber)) {
-                        throw new Error('Please enter a valid Airtel number (format: 075XXXXXXX)');
-                    }
-                    bookingData.phoneNumber = phoneNumber;
-                }
-
-                // Create booking
-                const bookingResponse = await fetch('/api/bookings', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(bookingData)
-                });
-
-                if (!bookingResponse.ok) {
-                    throw new Error('Failed to create booking');
-                }
-
-                const booking = await bookingResponse.json();
+                // Save booking
+                const booking = dataService.addBooking(bookingData);
 
                 // Handle payment based on selected method
                 switch (selectedPaymentMethod) {
                     case 'mobile-money':
-                        // Redirect to mobile money payment page
-                        window.location.href = `/payment.html?method=mobile-money&provider=${selectedProvider}&booking=${booking._id}`;
+                        window.location.href = `/payment.html?method=mobile-money&provider=${selectedProvider}&booking=${booking.id}`;
                         break;
                     
                     case 'card':
-                        // Handle card payment
                         const { paymentMethod, error } = await stripe.createPaymentMethod({
                             type: 'card',
                             card: card,
@@ -569,12 +547,10 @@
                             throw error;
                         }
 
-                        // Redirect to card payment confirmation
-                        window.location.href = `/payment.html?method=card&payment_method=${paymentMethod.id}&booking=${booking._id}`;
+                        window.location.href = `/payment.html?method=card&payment_method=${paymentMethod.id}&booking=${booking.id}`;
                         break;
                     
                     case 'cash':
-                        // Show booking confirmation for cash payment
                         showBookingConfirmation(booking);
                         break;
                 }
@@ -589,7 +565,7 @@
             const details = document.getElementById('summaryDetails');
             
             details.innerHTML = `
-                <p><strong>Booking Reference:</strong> ${booking._id}</p>
+                <p><strong>Booking Reference:</strong> ${booking.id}</p>
                 <p><strong>Service:</strong> ${booking.service.name}</p>
                 <p><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString()}</p>
                 <p><strong>Time:</strong> ${booking.time}</p>
@@ -623,7 +599,6 @@
         window.onload = () => {
             loadServices();
             loadStaff();
-            generateTimeSlots();
         };
     </script>
 </body>

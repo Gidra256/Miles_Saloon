@@ -1,0 +1,134 @@
+{
+    "services": [
+        {
+            "id": 1,
+            "name": "Men's Haircut",
+            "price": 15000,
+            "description": "Professional haircut for men",
+            "duration": 30
+        },
+        {
+            "id": 2,
+            "name": "Ladies' Haircut",
+            "price": 20000,
+            "description": "Professional haircut and styling for ladies",
+            "duration": 45
+        },
+        {
+            "id": 3,
+            "name": "Hair Coloring",
+            "price": 50000,
+            "description": "Professional hair coloring service",
+            "duration": 120
+        },
+        {
+            "id": 4,
+            "name": "Dreadlocks",
+            "price": 45000,
+            "description": "Dreadlock creation and maintenance",
+            "duration": 90
+        },
+        {
+            "id": 5,
+            "name": "Manicure",
+            "price": 25000,
+            "description": "Professional nail care for hands",
+            "duration": 45
+        },
+        {
+            "id": 6,
+            "name": "Pedicure",
+            "price": 30000,
+            "description": "Professional nail care for feet",
+            "duration": 45
+        },
+        {
+            "id": 7,
+            "name": "Facial",
+            "price": 35000,
+            "description": "Deep cleansing facial treatment",
+            "duration": 60
+        }
+    ],
+    "staff": {
+        "barbers": [
+            {
+                "id": 1,
+                "name": "Julius",
+                "role": "Senior Barber",
+                "specialization": "Men's Cuts",
+                "experience": "5 years",
+                "image": "images/staff/julius.jpg"
+            },
+            {
+                "id": 2,
+                "name": "Simon",
+                "role": "Expert Barber",
+                "specialization": "Fades & Designs",
+                "experience": "4 years",
+                "image": "images/staff/simon.jpg"
+            },
+            {
+                "id": 3,
+                "name": "Emma",
+                "role": "Barber",
+                "specialization": "Classic Cuts",
+                "experience": "3 years",
+                "image": "images/staff/emma.jpg"
+            },
+            {
+                "id": 4,
+                "name": "Rasta",
+                "role": "Dreadlock Specialist",
+                "specialization": "Dreadlocks",
+                "experience": "6 years",
+                "image": "images/staff/rasta.jpg"
+            }
+        ],
+        "ladies": [
+            {
+                "id": 5,
+                "name": "Joy",
+                "role": "Hair Stylist",
+                "specialization": "Ladies' Styling",
+                "experience": "7 years",
+                "image": "images/staff/joy.jpg"
+            }
+        ],
+        "nails": [
+            {
+                "id": 6,
+                "name": "Michael",
+                "role": "Nail Technician",
+                "specialization": "Manicure",
+                "experience": "3 years",
+                "image": "images/staff/michael.jpg"
+            },
+            {
+                "id": 7,
+                "name": "Justine",
+                "role": "Nail Artist",
+                "specialization": "Nail Art",
+                "experience": "4 years",
+                "image": "images/staff/justine.jpg"
+            },
+            {
+                "id": 8,
+                "name": "Rony",
+                "role": "Nail Specialist",
+                "specialization": "Pedicure",
+                "experience": "5 years",
+                "image": "images/staff/rony.jpg"
+            },
+            {
+                "id": 9,
+                "name": "Angella",
+                "role": "Nail Care Expert",
+                "specialization": "All Nail Services",
+                "experience": "6 years",
+                "image": "images/staff/angella.jpg"
+            }
+        ]
+    },
+    "bookings": []
+} 
