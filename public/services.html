@@ -3,638 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services - Miles Unisex Salon</title>
+    <title>Our Services - Miles Unisex Salon</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            color: #333;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .logo span {
-            color: #333;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-        }
-
-        .nav-links li {
-            margin-left: 30px;
-        }
-
-        .nav-links a {
-            color: #333;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #ff4d4d;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 1001;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 2px 0;
-            transition: 0.4s;
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 80px);
-                background: rgba(255, 255, 255, 0.95);
-                flex-direction: column;
-                align-items: center;
-                padding: 50px 0;
-                transition: 0.4s;
-                display: flex;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links li {
-                margin: 20px 0;
-            }
-
-            .nav-links a {
-                color: #333;
-            }
-        }
-
-        .page-header {
-            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.5) 100%), url('images/header-bg.jpg') center/cover;
-            height: 80vh;
-            color: white;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0 20px;
-            position: relative;
-            overflow: hidden;
-            margin-top: 0;
-        }
-
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, transparent 100%);
-            z-index: 1;
-        }
-
-        .page-header h1,
-        .page-header p {
-            position: relative;
-            z-index: 2;
-        }
-
-        .page-header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-            text-transform: capitalize;
-        }
-
-        .page-header p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            max-width: 800px;
-        }
-
-        /* Contact Section Styles */
-        .contact {
-            padding: 80px 20px;
-            background: #fff;
-        }
-
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 30px;
-        }
-
-        .contact-info h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .contact-details {
-            margin-bottom: 30px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .contact-item i {
-            color: #ff4d4d;
-            font-size: 1.5rem;
-        }
-
-        .contact-form-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .contact-form-container h3 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .contact-form .form-group {
-            margin-bottom: 0;
-        }
-
-        .contact-form label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: #ff4d4d;
-        }
-
-        .contact-form textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .contact-form button {
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-            width: 100%;
-        }
-
-        .contact-form button:hover {
-            background: #ff3333;
-        }
-
-        .contact-social {
-            margin-top: 30px;
-        }
-
-        .contact-social a {
-            background: #ff4d4d;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s, background 0.3s;
-        }
-
-        .contact-social a:hover {
-            transform: translateY(-3px);
-            background: #ff3333;
-        }
-
-        .map {
-            height: 400px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        @media (max-width: 1200px) {
-            .contact-container {
-                grid-template-columns: 1fr 1fr;
-            }
-            .map {
-                grid-column: span 2;
-                height: 300px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-            .map {
-                grid-column: span 1;
-            }
-        }
-
-        /* Footer Styles */
-        .footer {
-            background: #333;
-            color: white;
-            padding: 60px 20px 20px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-
-        .footer-section p {
-            margin-bottom: 10px;
-            color: #ccc;
-        }
-
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: #ff4d4d;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: #ff4d4d;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        @media (max-width: 768px) {
-            .footer-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    <base href="/Miles_Saloon/">
 </head>
 <body>
-    <nav class="navbar">
-        <a href="index.html" class="logo">
-            <img src="images/logo.png" alt="Miles Unisex Salon Logo">
-            <span>Miles Unisex Salon</span>
-        </a>
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
+    <header class="header">
+        <div class="nav-container">
+            <a href="/Miles_Saloon/" class="logo">Miles Salon</a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-links">
+                <a href="/Miles_Saloon/">Home</a>
+                <a href="/Miles_Saloon/public/services.html">Services</a>
+                <a href="/Miles_Saloon/public/gallery.html">Gallery</a>
+                <a href="/Miles_Saloon/public/booking.html" class="book-now">Book Now</a>
+            </nav>
         </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html" class="active">Services</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="booking.html">Book Now</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+    </header>
 
-    <!-- Services Header -->
-    <section class="page-header">
-        <h1>Our Services</h1>
-        <p>Discover our range of professional beauty services</p>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services-page">
-        <div class="services-grid">
-            <div class="service-card">
-                <img src="images/services1.svg" alt="Haircut">
-                <h3>Haircut & Styling</h3>
-                <p>Professional cuts and styling for all hair types</p>
-                <ul class="service-features">
-                    <li>Consultation included</li>
-                    <li>Wash and style</li>
-                    <li>Professional products</li>
-                </ul>
-                <span class="price">From $30</span>
-                <a href="booking.html" class="book-service">Book Now</a>
-            </div>
-
-            <div class="service-card">
-                <img src="images/services2.svg" alt="Color">
-                <h3>Hair Coloring</h3>
-                <p>Expert coloring and highlighting services</p>
-                <ul class="service-features">
-                    <li>Color consultation</li>
-                    <li>Premium hair colors</li>
-                    <li>Style finishing</li>
-                </ul>
-                <span class="price">From $80</span>
-                <a href="booking.html" class="book-service">Book Now</a>
-            </div>
-
-            <div class="service-card">
-                <img src="images/services3.svg" alt="Treatment">
-                <h3>Hair Treatment</h3>
-                <p>Revitalizing treatments for healthy hair</p>
-                <ul class="service-features">
-                    <li>Deep conditioning</li>
-                    <li>Scalp treatment</li>
-                    <li>Hair repair therapy</li>
-                </ul>
-                <span class="price">From $50</span>
-                <a href="booking.html" class="book-service">Book Now</a>
-            </div>
-
-            <div class="service-card">
-                <img src="images/services4.svg" alt="Facial">
-                <h3>Facial & Makeup</h3>
-                <p>Professional facial and makeup services</p>
-                <ul class="service-features">
-                    <li>Skin analysis</li>
-                    <li>Deep cleansing</li>
-                    <li>Professional makeup</li>
-                </ul>
-                <span class="price">From $60</span>
-                <a href="booking.html" class="book-service">Book Now</a>
-            </div>
-
-            <div class="service-card">
-                <img src="images/services5.svg" alt="Nails">
-                <h3>Nail Care</h3>
-                <p>Complete nail care and styling</p>
-                <ul class="service-features">
-                    <li>Manicure</li>
-                    <li>Pedicure</li>
-                    <li>Nail art</li>
-                </ul>
-                <span class="price">From $40</span>
-                <a href="booking.html" class="book-service">Book Now</a>
-            </div>
+    <div class="page-content">
+        <div class="page-header">
+            <h1>Our Services</h1>
+            <p>Discover our range of professional beauty and grooming services</p>
         </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="contact-container">
-            <div class="contact-info">
-                <h2>Contact Us</h2>
-                <div class="contact-details">
-                    <div class="contact-item location-marker">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <p class="location-title">Our Location:</p>
-                            <p>Arena Mall, Plot 3-5 Nsambya Road,</p>
-                            <p>Kampala, Uganda</p>
-                            <a href="https://maps.google.com/?q=Arena+Mall+Kampala+Uganda" target="_blank" class="directions-link">
-                                <i class="fas fa-directions"></i> Get Directions
-                            </a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <p>+1 (234) 567-8900</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>info@milessalon.com</p>
+        <div class="container">
+            <div class="services-grid">
+                <!-- Hair Services -->
+                <div class="service-card">
+                    <img src="public/images/haircut.jpg" alt="Haircut Service" class="service-image">
+                    <div class="service-content">
+                        <h3 class="service-title">Haircut & Styling</h3>
+                        <p class="service-description">Professional haircut and styling by our expert team. Includes consultation, wash, and styling.</p>
+                        <div class="service-price">From UGX 30,000</div>
+                        <a href="/Miles_Saloon/public/booking.html?service=haircut" class="book-button">Book Now</a>
                     </div>
                 </div>
-                <div class="hours">
-                    <h3>Business Hours</h3>
-                    <p>Monday - Friday: 9:00 AM - 8:00 PM</p>
-                    <p>Saturday: 10:00 AM - 6:00 PM</p>
-                    <p>Sunday: Closed</p>
-                </div>
-                <div class="social-links contact-social">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            <div class="contact-form-container">
-                <h3>Send us a Message</h3>
-                <form id="contactForm" class="contact-form">
-                    <div class="form-group">
-                        <label for="contact-name">Name</label>
-                        <input type="text" id="contact-name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-email">Email</label>
-                        <input type="email" id="contact-email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-subject">Subject</label>
-                        <input type="text" id="contact-subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-message">Message</label>
-                        <textarea id="contact-message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-            <div class="map">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.753810759276!2d32.58858661475353!3d0.3005499997750785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb820a4e6d7d%3A0x9d4f7ac7fc0787c7!2sArena+Mall!5e0!3m2!1sen!2sug!4v1710834058044!5m2!1sen!2sug&markers=color:red%7Clabel:M%7C0.3005499997750785,32.58858661475353"
-                    width="100%" 
-                    height="100%" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Miles Unisex Salon</h3>
-                <p>Your destination for professional hair and beauty services for both men and women.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                <!-- Hair Coloring -->
+                <div class="service-card">
+                    <img src="public/images/coloring.jpg" alt="Hair Coloring" class="service-image">
+                    <div class="service-content">
+                        <h3 class="service-title">Hair Coloring</h3>
+                        <p class="service-description">Full hair coloring service with premium products. Includes consultation and styling.</p>
+                        <div class="service-price">From UGX 50,000</div>
+                        <a href="/Miles_Saloon/public/booking.html?service=coloring" class="book-button">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Manicure & Pedicure -->
+                <div class="service-card">
+                    <img src="public/images/manicure.jpg" alt="Manicure & Pedicure" class="service-image">
+                    <div class="service-content">
+                        <h3 class="service-title">Manicure & Pedicure</h3>
+                        <p class="service-description">Luxurious nail care treatment for hands and feet. Includes massage and polish.</p>
+                        <div class="service-price">From UGX 40,000</div>
+                        <a href="/Miles_Saloon/public/booking.html?service=manicure" class="book-button">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Facial Treatment -->
+                <div class="service-card">
+                    <img src="public/images/facial.jpg" alt="Facial Treatment" class="service-image">
+                    <div class="service-content">
+                        <h3 class="service-title">Facial Treatment</h3>
+                        <p class="service-description">Rejuvenating facial treatment customized for your skin type.</p>
+                        <div class="service-price">From UGX 45,000</div>
+                        <a href="/Miles_Saloon/public/booking.html?service=facial" class="book-button">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Massage -->
+                <div class="service-card">
+                    <img src="public/images/massage.jpg" alt="Massage" class="service-image">
+                    <div class="service-content">
+                        <h3 class="service-title">Relaxing Massage</h3>
+                        <p class="service-description">Full body massage to relieve stress and tension.</p>
+                        <div class="service-price">From UGX 60,000</div>
+                        <a href="/Miles_Saloon/public/booking.html?service=massage" class="book-button">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Make-up -->
+                <div class="service-card">
+                    <img src="public/images/makeup.jpg" alt="Make-up" class="service-image">
+                    <div class="service-content">
+                        <h3 class="service-title">Professional Make-up</h3>
+                        <p class="service-description">Professional make-up application for any occasion.</p>
+                        <div class="service-price">From UGX 35,000</div>
+                        <a href="/Miles_Saloon/public/booking.html?service=makeup" class="book-button">Book Now</a>
+                    </div>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <p><a href="index.html">Home</a></p>
-                <p><a href="services.html">Services</a></p>
-                <p><a href="gallery.html">Gallery</a></p>
-                <p><a href="booking.html">Book Now</a></p>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p>Arena Mall, Plot 3-5</p>
-                <p>Nsambya Road, Kampala</p>
-                <p>+1 (234) 567-8900</p>
-                <p>info@milessalon.com</p>
-            </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Miles Salon. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
 
-    <script src="js/script.js"></script>
     <script>
-        // Mobile Menu Toggle
-        const menuToggle = document.querySelector('.menu-toggle');
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
 
-        menuToggle.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Contact Form Handling
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            try {
-                const formData = new FormData(this);
-                const data = {
-                    name: formData.get('name'),
-                    email: formData.get('email'),
-                    subject: formData.get('subject'),
-                    message: formData.get('message')
-                };
-
-                // Basic validation
-                if (!data.name || !data.email || !data.subject || !data.message) {
-                    throw new Error('Please fill in all fields');
-                }
-
-                // Email validation
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(data.email)) {
-                    throw new Error('Please enter a valid email address');
-                }
-
-                // Here you would typically send the data to your server
-                console.log('Contact form data:', data);
-                
-                // For now, just show a success message
-                alert('Thank you for your message! We will get back to you soon.');
-                this.reset();
-            } catch (error) {
-                alert(error.message || 'There was an error sending your message. Please try again.');
-            }
         });
     </script>
 </body>
