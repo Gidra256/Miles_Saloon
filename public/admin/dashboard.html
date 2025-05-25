@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sidebar-header img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-menu img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logout-btn {
+            padding: 8px 15px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff3333;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: #ff4d4d;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .card-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Recent Bookings Table */
+        .recent-bookings {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .view-all {
+            color: #ff4d4d;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .view-all:hover {
+            color: #ff3333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            font-weight: 600;
+            color: #333;
+        }
+
+        td {
+            color: #666;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status.confirmed {
+            background: #e6fff2;
+            color: #00cc66;
+        }
+
+        .status.pending {
+            background: #fff6e6;
+            color: #ffa500;
+        }
+
+        .status.cancelled {
+            background: #ffe6e6;
+            color: #ff4d4d;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 20px 0;
+            }
+
+            .sidebar-header h2,
+            .nav-link span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .nav-link {
+                justify-content: center;
+                padding: 15px;
+            }
+
+            .nav-link i {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.png" alt="Miles Salon Logo">
+            <h2>Admin Panel</h2>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Bookings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="services.html" class="nav-link">
+                    <i class="fas fa-cut"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="staff.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Staff</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="gallery.html" class="nav-link">
+                    <i class="fas fa-images"></i>
+                    <span>Gallery</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Dashboard</h1>
+            <div class="user-menu">
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Admin User">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <div class="dashboard-cards">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Total Bookings</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+                <div class="card-value">156</div>
+                <div class="card-label">This month</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Revenue</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="card-value">$4,520</div>
+                <div class="card-label">This month</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>New Clients</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="card-value">48</div>
+                <div class="card-label">This month</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Services</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                </div>
+                <div class="card-value">12</div>
+                <div class="card-label">Active services</div>
+            </div>
+        </div>
+
+        <div class="recent-bookings">
+            <div class="table-header">
+                <h2>Recent Bookings</h2>
+                <a href="bookings.html" class="view-all">View All</a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Service</th>
+                        <th>Date & Time</th>
+                        <th>Staff</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sarah Johnson</td>
+                        <td>Haircut & Styling</td>
+                        <td>2024-03-20 10:00 AM</td>
+                        <td>John Smith</td>
+                        <td><span class="status confirmed">Confirmed</span></td>
+                    </tr>
+                    <tr>
+                        <td>Michael Brown</td>
+                        <td>Hair Coloring</td>
+                        <td>2024-03-20 11:30 AM</td>
+                        <td>Sarah Wilson</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Emily Davis</td>
+                        <td>Hair Treatment</td>
+                        <td>2024-03-20 2:00 PM</td>
+                        <td>Mike Johnson</td>
+                        <td><span class="status cancelled">Cancelled</span></td>
+                    </tr>
+                    <tr>
+                        <td>James Wilson</td>
+                        <td>Beard Grooming</td>
+                        <td>2024-03-20 3:30 PM</td>
+                        <td>John Smith</td>
+                        <td><span class="status confirmed">Confirmed</span></td>
+                    </tr>
+                    <tr>
+                        <td>Lisa Anderson</td>
+                        <td>Special Occasion Styling</td>
+                        <td>2024-03-20 4:00 PM</td>
+                        <td>Sarah Wilson</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is authenticated
+        function checkAuth() {
+            if (!sessionStorage.getItem('adminAuthenticated')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.href = 'login.html';
+        }
+
+        // Check authentication when page loads
+        window.onload = checkAuth;
+    </script>
+</body>
+</html> 

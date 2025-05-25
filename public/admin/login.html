@@ -3,113 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Miles Salon</title>
-    <link rel="stylesheet" href="css/admin.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Admin Login - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
-            background-color: #f8f9fa;
-            height: 100vh;
+            background: #f5f5f5;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
+
         .login-container {
-            max-width: 400px;
-            width: 90%;
-            padding: 2rem;
             background: white;
+            padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
         }
-        .login-logo {
+
+        .login-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 30px;
         }
-        .login-logo img {
-            max-width: 150px;
+
+        .login-header h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
         }
+
+        .login-header img {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff4d4d;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #ff3333;
+        }
+
         .error-message {
-            color: #dc3545;
-            margin-bottom: 1rem;
+            color: #ff4d4d;
+            text-align: center;
+            margin-top: 10px;
             display: none;
+        }
+
+        .back-to-site {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-site a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .back-to-site a:hover {
+            color: #ff4d4d;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="login-logo">
-            <img src="/images/logo.png" alt="Miles Salon Logo">
-            <h4 class="mt-3">Admin Login</h4>
+        <div class="login-header">
+            <img src="../images/logo.png" alt="Miles Salon Logo">
+            <h1>Admin Login</h1>
         </div>
-        
-        <div class="error-message" id="errorMessage">
-            Invalid username or password
-        </div>
-
-        <form id="loginForm" action="/admin/login" method="POST">
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    <input type="text" class="form-control" name="username" id="username" required>
-                </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
             </div>
-            
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    <input type="password" class="form-control" name="password" id="password" required>
-                </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
             </div>
-
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="fas fa-sign-in-alt me-2"></i>Login
-            </button>
-            
-            <div class="text-center mt-3">
-                <a href="/" class="text-decoration-none">
-                    <i class="fas fa-arrow-left me-1"></i>Back to Website
-                </a>
-            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <div id="errorMessage" class="error-message">Invalid username or password</div>
         </form>
+        <div class="back-to-site">
+            <a href="../index.html">← Back to Main Site</a>
+        </div>
     </div>
 
-            <script>
+    <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        
-        // Replace these with your actual admin credentials
-        const adminUsername = 'admin';
-        const adminPassword = 'password123';
-        
-        if (username === adminUsername && password === adminPassword) {
-            window.location.href = 'index.html';
-        } else {
-            document.getElementById('errorMessage').style.display = 'block';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // For demonstration, using a simple check
+            // In production, this should be replaced with proper authentication
+            if (username === 'admin' && password === 'admin123') {
+                // Store authentication state
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                // Redirect to admin dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+            }
         });
-
-        // Clear error message when user starts typing
-        document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', () => {
-            document.getElementById('errorMessage').style.display = 'none';
-        });
-        });
-
-
-
     </script>
 </body>
 </html> 
