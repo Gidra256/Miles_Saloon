@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Booking page specific styles */
+        .booking-page {
+            padding: 60px 20px;
+        }
+
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .booking-form {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff4d4d;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .time-slot {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .time-slot:hover {
+            background: #f0f0f0;
+        }
+
+        .time-slot.selected {
+            background: #ff4d4d;
+            color: white;
+            border-color: #ff4d4d;
+        }
+
+        .booking-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .booking-summary.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo.svg" alt="Miles Unisex Salon Logo">
+        </a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="booking.html" class="active">Book Now</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Book an Appointment</h1>
+        <p>Schedule your visit with our expert stylists</p>
+    </header>
+
+    <section class="booking-page">
+        <div class="booking-container">
+            <form class="booking-form" id="bookingForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="service_id">Service</label>
+                    <select id="service_id" required>
+                        <option value="">Select a service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stylist_id">Stylist</label>
+                    <select id="stylist_id" required>
+                        <option value="">Select a stylist</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <div class="time-slots" id="timeSlots">
+                        <!-- Time slots will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes (Optional)</label>
+                    <textarea id="notes" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn">Book Appointment</button>
+
+                <div class="booking-summary" id="bookingSummary">
+                    <h3>Booking Summary</h3>
+                    <div id="summaryDetails"></div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Miles Unisex Salon</h3>
+                <p>Your destination for professional hair and beauty services for both men and women.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="index.html">Home</a></p>
+                <p><a href="services.html">Services</a></p>
+                <p><a href="gallery.html">Gallery</a></p>
+                <p><a href="booking.html">Book Now</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>Arena Mall, Plot 3-5</p>
+                <p>Nsambya Road, Kampala</p>
+                <p>+1 (234) 567-8900</p>
+                <p>info@milessalon.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Miles Salon. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Static Data
+        const services = [
+            {
+                _id: '1',
+                name: 'Haircut & Styling',
+                description: 'Professional haircut and styling services for all hair types',
+                price: 30
+            },
+            {
+                _id: '2',
+                name: 'Hair Coloring',
+                description: 'Full color, highlights, balayage, and other coloring services',
+                price: 75
+            },
+            {
+                _id: '3',
+                name: 'Hair Treatment',
+                description: 'Deep conditioning, keratin treatment, and hair repair services',
+                price: 50
+            },
+            {
+                _id: '4',
+                name: 'Special Occasion Styling',
+                description: 'Wedding, prom, and special event hair styling',
+                price: 65
+            },
+            {
+                _id: '5',
+                name: 'Beard Grooming',
+                description: 'Professional beard trimming and styling services',
+                price: 25
+            },
+            {
+                _id: '6',
+                name: 'Hair Extensions',
+                description: 'Premium quality hair extension services',
+                price: 150
+            }
+        ];
+
+        const staff = [
+            {
+                _id: '1',
+                name: 'John Smith',
+                specialization: 'Senior Hair Stylist',
+                image: 'https://randomuser.me/api/portraits/men/1.jpg'
+            },
+            {
+                _id: '2',
+                name: 'Sarah Johnson',
+                specialization: 'Color Specialist',
+                image: 'https://randomuser.me/api/portraits/women/1.jpg'
+            },
+            {
+                _id: '3',
+                name: 'Michael Brown',
+                specialization: 'Barber',
+                image: 'https://randomuser.me/api/portraits/men/2.jpg'
+            },
+            {
+                _id: '4',
+                name: 'Emily Davis',
+                specialization: 'Hair Treatment Expert',
+                image: 'https://randomuser.me/api/portraits/women/2.jpg'
+            }
+        ];
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Load services and staff
+        function loadServices() {
+            const serviceSelect = document.getElementById('service_id');
+            serviceSelect.innerHTML = '<option value="">Select a service</option>';
+            services.forEach(service => {
+                const option = document.createElement('option');
+                option.value = service._id;
+                option.textContent = `${service.name} - $${service.price}`;
+                serviceSelect.appendChild(option);
+            });
+        }
+
+        function loadStaff() {
+            const stylistSelect = document.getElementById('stylist_id');
+            stylistSelect.innerHTML = '<option value="">Select a stylist</option>';
+            staff.forEach(person => {
+                const option = document.createElement('option');
+                option.value = person._id;
+                option.textContent = `${person.name} - ${person.specialization}`;
+                stylistSelect.appendChild(option);
+            });
+        }
+
+        // Generate time slots
+        function generateTimeSlots() {
+            const timeSlots = document.getElementById('timeSlots');
+            const startTime = 9; // 9 AM
+            const endTime = 20; // 8 PM
+
+            for (let hour = startTime; hour < endTime; hour++) {
+                for (let minute of ['00', '30']) {
+                    const timeSlot = document.createElement('div');
+                    timeSlot.className = 'time-slot';
+                    const time = `${hour.toString().padStart(2, '0')}:${minute}`;
+                    timeSlot.textContent = time;
+                    timeSlot.addEventListener('click', () => {
+                        document.querySelectorAll('.time-slot').forEach(slot => {
+                            slot.classList.remove('selected');
+                        });
+                        timeSlot.classList.add('selected');
+                        document.getElementById('time').value = time;
+                    });
+                    timeSlots.appendChild(timeSlot);
+                }
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const bookingData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service_id').value,
+                stylist: document.getElementById('stylist_id').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                notes: document.getElementById('notes').value || ''
+            };
+
+            try {
+                // Basic validation
+                const requiredFields = ['name', 'email', 'phone', 'service', 'stylist', 'date', 'time'];
+                const missingFields = requiredFields.filter(field => !bookingData[field]);
+                if (missingFields.length > 0) {
+                    throw new Error(`Please fill in all required fields: ${missingFields.join(', ')}`);
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(bookingData.email)) {
+                    throw new Error('Please enter a valid email address');
+                }
+
+                // Phone validation
+                const phoneRegex = /^\+?[\d\s-]{10,}$/;
+                if (!phoneRegex.test(bookingData.phone)) {
+                    throw new Error('Please enter a valid phone number');
+                }
+
+                // Show booking summary
+                const summary = document.getElementById('bookingSummary');
+                const summaryDetails = document.getElementById('summaryDetails');
+                const service = services.find(s => s._id === bookingData.service);
+                const stylist = staff.find(s => s._id === bookingData.stylist);
+
+                summaryDetails.innerHTML = `
+                    <p><strong>Name:</strong> ${bookingData.name}</p>
+                    <p><strong>Service:</strong> ${service.name}</p>
+                    <p><strong>Price:</strong> $${service.price}</p>
+                    <p><strong>Stylist:</strong> ${stylist.name}</p>
+                    <p><strong>Date:</strong> ${bookingData.date}</p>
+                    <p><strong>Time:</strong> ${bookingData.time}</p>
+                `;
+                summary.classList.add('active');
+
+                // Show success message
+                alert('Thank you for your booking! We will confirm your appointment shortly.');
+                
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Set minimum date for booking
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.min = tomorrow.toISOString().split('T')[0];
+
+        // Initialize page
+        window.onload = () => {
+            loadServices();
+            loadStaff();
+            generateTimeSlots();
+        };
+    </script>
+</body>
+</html> 

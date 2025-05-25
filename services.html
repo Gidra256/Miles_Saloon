@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo.svg" alt="Miles Unisex Salon Logo">
+        </a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Our Services</h1>
+        <p>Discover our range of professional beauty services</p>
+    </header>
+
+    <section class="services-page">
+        <div class="service-grid" id="servicesList">
+            <div class="service-card">
+                <h3>Haircut & Styling</h3>
+                <p>Professional haircut and styling services for all hair types</p>
+                <div class="price">$30</div>
+                <a href="booking.html" class="btn">Book Now</a>
+            </div>
+            <div class="service-card">
+                <h3>Hair Coloring</h3>
+                <p>Full color, highlights, balayage, and other coloring services</p>
+                <div class="price">$75</div>
+                <a href="booking.html" class="btn">Book Now</a>
+            </div>
+            <div class="service-card">
+                <h3>Hair Treatment</h3>
+                <p>Deep conditioning, keratin treatment, and hair repair services</p>
+                <div class="price">$50</div>
+                <a href="booking.html" class="btn">Book Now</a>
+            </div>
+            <div class="service-card">
+                <h3>Special Occasion Styling</h3>
+                <p>Wedding, prom, and special event hair styling</p>
+                <div class="price">$65</div>
+                <a href="booking.html" class="btn">Book Now</a>
+            </div>
+            <div class="service-card">
+                <h3>Beard Grooming</h3>
+                <p>Professional beard trimming and styling services</p>
+                <div class="price">$25</div>
+                <a href="booking.html" class="btn">Book Now</a>
+            </div>
+            <div class="service-card">
+                <h3>Hair Extensions</h3>
+                <p>Premium quality hair extension services</p>
+                <div class="price">$150</div>
+                <a href="booking.html" class="btn">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Miles Unisex Salon</h3>
+                <p>Your destination for professional hair and beauty services for both men and women.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="index.html">Home</a></p>
+                <p><a href="services.html">Services</a></p>
+                <p><a href="gallery.html">Gallery</a></p>
+                <p><a href="booking.html">Book Now</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>Arena Mall, Plot 3-5</p>
+                <p>Nsambya Road, Kampala</p>
+                <p>+1 (234) 567-8900</p>
+                <p>info@milessalon.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Miles Salon. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html> 
