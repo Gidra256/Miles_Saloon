@@ -70,18 +70,19 @@
         }
 
         .logo {
-            color: #333;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
             display: flex;
             align-items: center;
+            text-decoration: none;
         }
 
         .logo img {
             height: 50px;
             width: auto;
-            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
         }
 
         .logo span {
@@ -992,12 +993,37 @@
             font-size: 0.9rem;
             color: #ccc;
         }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff4d4d;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #ff4d4d !important;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
-        <a href="index.html" class="logo">
+        <a href="#" class="logo">
             <img src="images/logo.svg" alt="Miles Unisex Salon Logo">
         </a>
         <div class="menu-toggle">
@@ -1006,11 +1032,11 @@
             <span></span>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="#booking">Book Now</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#" class="nav-link active">Home</a></li>
+            <li><a href="#services" class="nav-link">Services</a></li>
+            <li><a href="#gallery" class="nav-link">Gallery</a></li>
+            <li><a href="#booking" class="nav-link">Book Now</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
     </nav>
 
@@ -1616,6 +1642,63 @@
             loadServices();
             loadStaff();
         };
+
+        // Navigation and scroll handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-links .nav-link');
+            const sections = document.querySelectorAll('section');
+            
+            function updateActiveLink() {
+                let currentSection = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}` || 
+                       (currentSection === '' && link.getAttribute('href') === '#')) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        const targetSection = document.querySelector(targetId);
+                        if (targetSection) {
+                            const offsetTop = targetSection.offsetTop - 80;
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.querySelector('.nav-links');
+                    mobileMenu.classList.remove('active');
+                });
+            });
+
+            // Update active link on scroll
+            window.addEventListener('scroll', updateActiveLink);
+            
+            // Initial check for active link
+            updateActiveLink();
+        });
     </script>
 </body>
 </html>
