@@ -1,1 +1,79 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="logo">
+            <img src="../images/logo.png" alt="Miles Unisex Salon Logo">
+            <span>Miles Unisex Salon</span>
+        </a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="page-content">
+        <section class="services">
+            <h1>Our Services</h1>
+            <div class="service-grid" id="servicesList">
+                <!-- Services will be loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Miles Unisex Salon</h3>
+                <p>Your destination for professional hair and beauty services for both men and women.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="services.html">Services</a></p>
+                <p><a href="about.html">About Us</a></p>
+                <p><a href="booking.html">Book Now</a></p>
+                <p><a href="contact.html">Contact</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>Arena Mall, Plot 3-5</p>
+                <p>Nsambya Road, Kampala</p>
+                <p>+256 (700) 123-456</p>
+                <p>info@milessalon.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Miles Salon. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Load services
+        window.onload = () => {
+            loadServices();
+        };
+    </script>
+</body>
+</html> 
