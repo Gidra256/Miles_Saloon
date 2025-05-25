@@ -713,18 +713,20 @@ footer {
 
 /* Page Headers */
 .page-header {
-    padding: 120px 2rem 60px;
-    text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                url('../images/h1_hero1.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/h1_hero1.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     color: white;
+    text-align: center;
+    padding: 120px 2rem 60px;
+    margin-bottom: 40px;
 }
 
 .page-header h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    animation: fadeInUp 1s ease;
 }
 
 .page-header p {
@@ -732,6 +734,9 @@ footer {
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+    animation: fadeInUp 1s ease 0.2s;
+    opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 /* Services Page */
