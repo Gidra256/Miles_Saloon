@@ -30,4 +30,7 @@ out/
 
 # Cache
 .cache/
-.temp/ 
+.temp/
+
+# Excluded files
+download-uganda-images.js 

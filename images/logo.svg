@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .logo-text { font-family: Arial, sans-serif; font-weight: bold; }
+        .scissors { fill: #ff4d4d; }
+    </style>
+    <text x="60" y="35" class="logo-text" font-size="24">Miles Salon</text>
+    <path class="scissors" d="M20,15 C18,13 15,12 12,12 C7,12 3,16 3,21 C3,26 7,30 12,30 C15,30 18,29 20,27 M40,15 C42,13 45,12 48,12 C53,12 57,16 57,21 C57,26 53,30 48,30 C45,30 42,29 40,27 M20,27 L40,15 M20,15 L40,27"/>
+</svg> 
