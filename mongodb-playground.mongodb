@@ -1,0 +1,58 @@
+// Create database and collections
+use('miles-salon');
+
+// Create and populate services collection
+db.services.insertMany([
+  {
+    "name": "Haircut",
+    "price": 30,
+    "description": "Professional haircut service"
+  },
+  {
+    "name": "Hair Coloring",
+    "price": 60,
+    "description": "Full hair coloring service"
+  },
+  {
+    "name": "Styling",
+    "price": 40,
+    "description": "Hair styling for any occasion"
+  },
+  {
+    "name": "Manicure",
+    "price": 25,
+    "description": "Professional nail care"
+  },
+  {
+    "name": "Pedicure",
+    "price": 35,
+    "description": "Luxury foot care service"
+  }
+]);
+
+// Create and populate staff collection
+db.staff.insertMany([
+  {
+    "name": "John Doe",
+    "specialization": "Hair Stylist",
+    "experience": "5 years"
+  },
+  {
+    "name": "Jane Smith",
+    "specialization": "Color Specialist",
+    "experience": "7 years"
+  },
+  {
+    "name": "Mike Johnson",
+    "specialization": "Nail Artist",
+    "experience": "3 years"
+  },
+  {
+    "name": "Sarah Wilson",
+    "specialization": "Senior Stylist",
+    "experience": "8 years"
+  }
+]);
+
+// Create bookings collection
+db.createCollection('bookings'); 

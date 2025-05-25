@@ -1,0 +1,22 @@
+[
+  {
+    "name": "John Doe",
+    "specialization": "Hair Stylist",
+    "experience": "5 years"
+  },
+  {
+    "name": "Jane Smith",
+    "specialization": "Color Specialist",
+    "experience": "7 years"
+  },
+  {
+    "name": "Mike Johnson",
+    "specialization": "Nail Artist",
+    "experience": "3 years"
+  },
+  {
+    "name": "Sarah Wilson",
+    "specialization": "Senior Stylist",
+    "experience": "8 years"
+  }
+] 

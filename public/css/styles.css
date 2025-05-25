@@ -76,6 +76,65 @@ body {
 .nav-links a.active::after {
     width: 100%;
 }
+/* Enhanced Navbar Styles */
+.enhanced-navbar {
+    background: linear-gradient(90deg, #f8fafc 60%, #ffe5ec 100%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-name {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 48px;
+    margin-right: 12px;
+}
+
+.salon-name {
+    font-family: 'Segoe Script', 'Brush Script MT', cursive, sans-serif;
+    font-size: 2rem;
+    color: #d72660;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 1px 2px 8px #fff, 0 2px 8px #d7266033;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    background: #d72660;
+    color: #fff;
+    box-shadow: 0 2px 8px #d7266040;
+}
 
 .book-now-btn {
     background: var(--primary-color);
@@ -91,19 +150,19 @@ body {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('images/h1_hero1.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    padding: 0 1rem;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/h1_hero1.jpg'); /* Adjust the path if needed */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 0 1rem;
 }
+
 
 .hero-content h1 {
     font-size: 3.5rem;
@@ -262,38 +321,44 @@ body {
 .about-img:hover {
     transform: scale(1.05);
 }
-
-/* Gallery Section */
-.gallery {
-    padding: 5rem 2rem;
-    background: var(--light-gray);
+.gallery-section {
+  padding: 5rem 2rem;
+  background-color: #f7f7f7;
 }
 
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    height: 300px;
-}
+
 
 .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1);
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  transform: translateY(100%);
+  transition: transform 0.2s ease-in-out;
 }
+
+.gallery-item:hover .gallery-overlay {
+  transform: translateY(0);
+}
+
+
 
 /* Testimonials Section */
 .testimonials {

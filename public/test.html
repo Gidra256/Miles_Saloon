@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .service-item, .staff-item {
+            margin: 10px 0;
+            padding: 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .service-item h3, .staff-item h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        .service-item p, .staff-item p {
+            margin: 5px 0;
+            color: #34495e;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Miles Salon API Test Page</h1>
+
+    <!-- View Services Section -->
+    <div class="section">
+        <h2>View Services</h2>
+        <button onclick="getServices()">Get All Services</button>
+        <div id="servicesResult" class="result"></div>
+    </div>
+
+    <!-- Add Service Section -->
+    <div class="section">
+        <h2>Add New Service</h2>
+        <form id="addServiceForm">
+            <div class="form-group">
+                <label for="serviceName">Service Name:</label>
+                <input type="text" id="serviceName" required>
+            </div>
+            <div class="form-group">
+                <label for="servicePrice">Price:</label>
+                <input type="number" id="servicePrice" required>
+            </div>
+            <div class="form-group">
+                <label for="serviceDescription">Description:</label>
+                <input type="text" id="serviceDescription">
+            </div>
+            <button type="button" onclick="addService()">Add Service</button>
+        </form>
+        <div id="addServiceResult" class="result"></div>
+    </div>
+
+    <!-- View Staff Section -->
+    <div class="section">
+        <h2>View Staff</h2>
+        <button onclick="getStaff()">Get All Staff</button>
+        <div id="staffResult" class="result"></div>
+    </div>
+
+    <!-- Add Staff Member Section -->
+    <div class="section">
+        <h2>Add New Staff Member</h2>
+        <form id="addStaffForm">
+            <div class="form-group">
+                <label for="staffName">Name:</label>
+                <input type="text" id="staffName" required>
+            </div>
+            <div class="form-group">
+                <label for="specialization">Specialization:</label>
+                <input type="text" id="specialization" required>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience:</label>
+                <input type="text" id="experience" placeholder="e.g., 5 years">
+            </div>
+            <button type="button" onclick="addStaff()">Add Staff Member</button>
+        </form>
+        <div id="addStaffResult" class="result"></div>
+    </div>
+
+    <!-- Create Booking Section -->
+    <div class="section">
+        <h2>Create New Booking</h2>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="service_id">Service:</label>
+                <select id="service_id" required>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="stylist_id">Stylist:</label>
+                <select id="stylist_id" required>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Time:</label>
+                <input type="time" id="time" required>
+            </div>
+            <div class="form-group">
+                <label for="notes">Notes:</label>
+                <input type="text" id="notes">
+            </div>
+            <button type="button" onclick="createBooking()">Create Booking</button>
+        </form>
+        <div id="bookingResult" class="result"></div>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="section">
+        <h2>Payment</h2>
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="amount">Amount (UGX):</label>
+                <input type="number" id="amount" readonly>
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method:</label>
+                <select id="paymentMethod" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="mtn">MTN Mobile Money</option>
+                    <option value="airtel">Airtel Money</option>
+                    <option value="cash">Cash</option>
+                </select>
+            </div>
+            <div id="mobileMoneyFields" style="display: none;">
+                <div class="form-group">
+                    <label for="phoneNumber">Mobile Money Phone Number:</label>
+                    <input type="tel" id="phoneNumber" placeholder="256XXXXXXXXX">
+                </div>
+            </div>
+            <button type="button" onclick="processPayment()">Process Payment</button>
+        </form>
+        <div id="paymentResult" class="result"></div>
+    </div>
+
+    <!-- View Bookings Section -->
+    <div class="section">
+        <h2>View Bookings (Admin)</h2>
+        <button onclick="getBookings()">Get All Bookings</button>
+        <div id="bookingsResult" class="result"></div>
+    </div>
+
+    <script>
+        // Populate services and staff dropdowns on page load
+        window.onload = async () => {
+            await getServices();
+            await getStaff();
+        };
+
+        async function getServices() {
+            try {
+                const response = await fetch('/api/services');
+                const services = await response.json();
+                
+                if (services && services.length > 0) {
+                    // Format services in a readable way
+                    const formattedServices = services.map(service => 
+                        `<div class="service-item">
+                            <h3>${service.name}</h3>
+                            <p>Price: UGX ${service.price},000</p>
+                            <p>Description: ${service.description || 'No description'}</p>
+                        </div>`
+                    ).join('');
+                    
+                    document.getElementById('servicesResult').innerHTML = formattedServices;
+                } else {
+                    document.getElementById('servicesResult').innerHTML = 'No services found';
+                }
+                
+                // Populate services dropdown
+                const select = document.getElementById('service_id');
+                select.innerHTML = '<option value="">Select a service</option>';
+                services.forEach(service => {
+                    const option = document.createElement('option');
+                    option.value = service._id;
+                    option.textContent = `${service.name} - UGX ${service.price},000`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error details:', error);
+                document.getElementById('servicesResult').innerHTML = 
+                    `<div style="color: red">
+                        Error loading services: ${error.message}<br>
+                        Please check the console for more details.
+                    </div>`;
+            }
+        }
+
+        async function addService() {
+            try {
+                const serviceData = {
+                    name: document.getElementById('serviceName').value,
+                    price: Number(document.getElementById('servicePrice').value),
+                    description: document.getElementById('serviceDescription').value
+                };
+
+                // Show what we're sending
+                document.getElementById('addServiceResult').innerHTML = 
+                    `<div style="color: blue">Sending data: ${JSON.stringify(serviceData)}</div>`;
+
+                const response = await fetch('/api/services', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(serviceData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Success message
+                    document.getElementById('addServiceResult').innerHTML = 
+                        `<div style="color: green">
+                            Service added successfully!<br>
+                            Name: ${result.name}<br>
+                            Price: UGX ${result.price},000<br>
+                            Description: ${result.description}
+                        </div>`;
+                    
+                    // Clear the form
+                    document.getElementById('serviceName').value = '';
+                    document.getElementById('servicePrice').value = '';
+                    document.getElementById('serviceDescription').value = '';
+                    
+                    // Refresh the services list
+                    await getServices();
+                } else {
+                    // Error message from server
+                    document.getElementById('addServiceResult').innerHTML = 
+                        `<div style="color: red">Error: ${result.message || 'Could not add service'}</div>`;
+                }
+            } catch (error) {
+                // Show detailed error
+                console.error('Error details:', error);
+                document.getElementById('addServiceResult').innerHTML = 
+                    `<div style="color: red">
+                        Error adding service: ${error.message}<br>
+                        Please check the console for more details.
+                    </div>`;
+            }
+        }
+
+        async function getStaff() {
+            try {
+                const response = await fetch('/api/staff');
+                const staff = await response.json();
+                
+                // Format staff in a readable way
+                const formattedStaff = staff.map(person => 
+                    `<div class="staff-item">
+                        <h3>${person.name}</h3>
+                        <p>Specialization: ${person.specialization}</p>
+                        <p>Experience: ${person.experience}</p>
+                    </div>`
+                ).join('');
+                
+                document.getElementById('staffResult').innerHTML = formattedStaff || 'No staff found';
+                
+                // Populate staff dropdown
+                const select = document.getElementById('stylist_id');
+                select.innerHTML = '';
+                staff.forEach(person => {
+                    const option = document.createElement('option');
+                    option.value = person._id;
+                    option.textContent = `${person.name} - ${person.specialization}`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                document.getElementById('staffResult').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        async function addStaff() {
+            try {
+                const staffData = {
+                    name: document.getElementById('staffName').value,
+                    specialization: document.getElementById('specialization').value,
+                    experience: document.getElementById('experience').value
+                };
+
+                console.log('Sending staff data:', staffData);
+
+                const response = await fetch('/api/staff', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(staffData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('addStaffResult').innerHTML = 
+                        `<div style="color: green">
+                            Staff member added successfully!<br>
+                            Name: ${result.name}<br>
+                            Specialization: ${result.specialization}<br>
+                            Experience: ${result.experience}
+                        </div>`;
+                    
+                    // Clear the form
+                    document.getElementById('staffName').value = '';
+                    document.getElementById('specialization').value = '';
+                    document.getElementById('experience').value = '';
+                    
+                    // Refresh the staff list
+                    await getStaff();
+                } else {
+                    document.getElementById('addStaffResult').innerHTML = 
+                        `<div style="color: red">Error: ${result.message || 'Failed to add staff member'}</div>`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('addStaffResult').innerHTML = 
+                    `<div style="color: red">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function createBooking() {
+            try {
+                const bookingData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    service: document.getElementById('service_id').value,
+                    stylist: document.getElementById('stylist_id').value,
+                    date: document.getElementById('date').value,
+                    time: document.getElementById('time').value,
+                    notes: document.getElementById('notes').value
+                };
+
+                // Debug: Show what we're sending
+                console.log('Sending booking data:', bookingData);
+                document.getElementById('bookingResult').innerHTML = 
+                    `<div style="color: blue">Sending data: ${JSON.stringify(bookingData, null, 2)}</div>`;
+
+                // Validate all required fields
+                const requiredFields = ['name', 'email', 'phone', 'service', 'stylist', 'date', 'time'];
+                const missingFields = requiredFields.filter(field => !bookingData[field]);
+                
+                if (missingFields.length > 0) {
+                    document.getElementById('bookingResult').innerHTML = 
+                        `<div style="color: red">Please fill in all required fields: ${missingFields.join(', ')}</div>`;
+                    return;
+                }
+
+                const response = await fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Get the service details for payment
+                    const serviceSelect = document.getElementById('service_id');
+                    const selectedService = serviceSelect.options[serviceSelect.selectedIndex];
+                    const serviceName = selectedService.text.split(' - ')[0];
+                    const amount = selectedService.text.match(/UGX (\d+),000/)[1] * 1000;
+
+                    // Success message
+                    document.getElementById('bookingResult').innerHTML = 
+                        `<div style="color: green">
+                            Booking created successfully!<br>
+                            Name: ${result.name}<br>
+                            Service: ${result.service}<br>
+                            Date: ${result.date}<br>
+                            Time: ${result.time}
+                        </div>`;
+                    
+                    // Redirect to payment page
+                    window.location.href = `/payment.html?service=${result.service}&amount=${amount}&serviceName=${encodeURIComponent(serviceName)}&bookingId=${result._id}`;
+                } else {
+                    // Error message from server
+                    document.getElementById('bookingResult').innerHTML = 
+                        `<div style="color: red">Error: ${result.message}</div>`;
+                }
+            } catch (error) {
+                console.error('Error details:', error);
+                document.getElementById('bookingResult').innerHTML = 
+                    `<div style="color: red">
+                        Error creating booking: ${error.message}<br>
+                        Please check the console for more details.
+                    </div>`;
+            }
+        }
+
+        async function getBookings() {
+            try {
+                const response = await fetch('/api/admin/bookings');
+                const bookings = await response.json();
+                document.getElementById('bookingsResult').textContent = JSON.stringify(bookings, null, 2);
+            } catch (error) {
+                document.getElementById('bookingsResult').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // Add payment related functions
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            const mobileMoneyFields = document.getElementById('mobileMoneyFields');
+            if (this.value === 'mtn' || this.value === 'airtel') {
+                mobileMoneyFields.style.display = 'block';
+            } else {
+                mobileMoneyFields.style.display = 'none';
+            }
+        });
+
+        async function processPayment() {
+            try {
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                const amount = document.getElementById('amount').value;
+                const phoneNumber = document.getElementById('phoneNumber').value;
+
+                if (!paymentMethod) {
+                    throw new Error('Please select a payment method');
+                }
+
+                if ((paymentMethod === 'mtn' || paymentMethod === 'airtel') && !phoneNumber) {
+                    throw new Error('Please enter a valid phone number for mobile money payment');
+                }
+
+                const paymentData = {
+                    method: paymentMethod,
+                    amount: amount,
+                    phoneNumber: phoneNumber || null
+                };
+
+                const response = await fetch('/api/payments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(paymentData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('paymentResult').innerHTML = 
+                        `<div style="color: green">
+                            Payment initiated successfully!<br>
+                            Amount: UGX ${amount}<br>
+                            Method: ${paymentMethod.toUpperCase()}<br>
+                            ${phoneNumber ? `Phone: ${phoneNumber}` : ''}
+                        </div>`;
+                } else {
+                    throw new Error(result.message || 'Payment processing failed');
+                }
+            } catch (error) {
+                document.getElementById('paymentResult').innerHTML = 
+                    `<div style="color: red">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Update amount when service is selected
+        document.getElementById('service_id').addEventListener('change', function() {
+            const selectedService = this.options[this.selectedIndex];
+            const amount = selectedService.text.match(/UGX (\d+),000/);
+            if (amount) {
+                document.getElementById('amount').value = amount[1] * 1000;
+            }
+        });
+    </script>
+</body>
+</html> 

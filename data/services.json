@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Haircut",
+    "price": 30,
+    "description": "Professional haircut service"
+  },
+  {
+    "name": "Hair Coloring",
+    "price": 60,
+    "description": "Full hair coloring service"
+  },
+  {
+    "name": "Styling",
+    "price": 40,
+    "description": "Hair styling for any occasion"
+  },
+  {
+    "name": "Manicure",
+    "price": 25,
+    "description": "Professional nail care"
+  },
+  {
+    "name": "Pedicure",
+    "price": 35,
+    "description": "Luxury foot care service"
+  }
+] 

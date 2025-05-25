@@ -1,0 +1,113 @@
+/* Admin Dashboard Styles */
+.sidebar {
+    min-height: 100vh;
+    background: #343a40;
+    color: white;
+}
+
+.nav-link {
+    color: rgba(255,255,255,.8);
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,.1);
+}
+
+.nav-link.active {
+    background: rgba(255,255,255,.1);
+    color: white;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.stats-card {
+    transition: transform 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.modal-content {
+    border-radius: 0.5rem;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Gallery styles */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Payment table styles */
+.payment-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.status-completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: black;
+}
+
+.status-failed {
+    background-color: #dc3545;
+    color: white;
+} 

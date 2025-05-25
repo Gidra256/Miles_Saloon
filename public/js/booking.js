@@ -110,7 +110,7 @@ document.getElementById('bookingForm').addEventListener('submit', async function
     }
 });
 
-// Load services from database
+// Load services from in-memory storage
 async function loadServices() {
     try {
         const response = await fetch('http://localhost:3000/api/services');
