@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings Management - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base styles (same as services.html) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles (same as services.html) */
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sidebar-header img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Bookings Specific Styles */
+        .bookings-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .bookings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .bookings-table th,
+        .bookings-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bookings-table th {
+            background: #f8f8f8;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .bookings-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .confirm-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .confirm-btn:hover {
+            background: #218838;
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background: #c82333;
+        }
+
+        .complete-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .complete-btn:hover {
+            background: #0056b3;
+        }
+
+        .view-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: #5a6268;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .booking-details {
+            margin-top: 20px;
+        }
+
+        .detail-group {
+            margin-bottom: 15px;
+        }
+
+        .detail-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .detail-group span {
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .sidebar-header h2,
+            .nav-link span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .bookings-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .filters {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .filter-group select,
+            .filter-group input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.png" alt="Miles Salon Logo">
+            <h2>Admin Panel</h2>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="bookings.html" class="nav-link active">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Bookings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="services.html" class="nav-link">
+                    <i class="fas fa-cut"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="staff.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Staff</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="gallery.html" class="nav-link">
+                    <i class="fas fa-images"></i>
+                    <span>Gallery</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Bookings Management</h1>
+            <div class="user-menu">
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Admin User">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <div class="bookings-container">
+            <div class="bookings-header">
+                <h2>All Bookings</h2>
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="dateFilter">Date:</label>
+                        <input type="date" id="dateFilter" onchange="filterBookings()">
+                    </div>
+                    <div class="filter-group">
+                        <label for="statusFilter">Status:</label>
+                        <select id="statusFilter" onchange="filterBookings()">
+                            <option value="">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="serviceFilter">Service:</label>
+                        <select id="serviceFilter" onchange="filterBookings()">
+                            <option value="">All Services</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Client</th>
+                            <th>Service</th>
+                            <th>Stylist</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <!-- Bookings will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>Booking Details</h2>
+            <div id="bookingDetails" class="booking-details">
+                <!-- Booking details will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        function checkAuth() {
+            if (!sessionStorage.getItem('adminAuthenticated')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize bookings from localStorage or use sample data
+        let bookings = JSON.parse(localStorage.getItem('salonBookings')) || [
+            {
+                id: 1,
+                date: '2024-03-20',
+                time: '10:00',
+                clientName: 'John Doe',
+                clientEmail: 'john@example.com',
+                clientPhone: '+1234567890',
+                service: 'Haircut & Styling',
+                stylist: 'Sarah Johnson',
+                status: 'confirmed',
+                notes: 'First time client'
+            },
+            {
+                id: 2,
+                date: '2024-03-20',
+                time: '14:30',
+                clientName: 'Jane Smith',
+                clientEmail: 'jane@example.com',
+                clientPhone: '+1987654321',
+                service: 'Hair Coloring',
+                stylist: 'Mike Wilson',
+                status: 'pending',
+                notes: 'Allergic to certain dyes'
+            }
+        ];
+
+        // Get services for filter dropdown
+        const services = JSON.parse(localStorage.getItem('salonServices')) || [
+            { id: 1, name: 'Haircut & Styling' },
+            { id: 2, name: 'Hair Coloring' },
+            { id: 3, name: 'Hair Treatment' }
+        ];
+
+        // Populate service filter
+        function populateServiceFilter() {
+            const serviceFilter = document.getElementById('serviceFilter');
+            services.forEach(service => {
+                const option = document.createElement('option');
+                option.value = service.name;
+                option.textContent = service.name;
+                serviceFilter.appendChild(option);
+            });
+        }
+
+        // Display bookings
+        function displayBookings(filteredBookings = null) {
+            const bookingsToDisplay = filteredBookings || bookings;
+            const tbody = document.getElementById('bookingsTableBody');
+            tbody.innerHTML = '';
+
+            bookingsToDisplay.forEach(booking => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${booking.date} ${booking.time}</td>
+                    <td>${booking.clientName}</td>
+                    <td>${booking.service}</td>
+                    <td>${booking.stylist}</td>
+                    <td><span class="status-badge status-${booking.status}">${booking.status}</span></td>
+                    <td class="action-buttons">
+                        ${booking.status === 'pending' ? `
+                            <button class="action-btn confirm-btn" onclick="updateBookingStatus(${booking.id}, 'confirmed')">
+                                <i class="fas fa-check"></i> Confirm
+                            </button>
+                        ` : ''}
+                        ${['pending', 'confirmed'].includes(booking.status) ? `
+                            <button class="action-btn cancel-btn" onclick="updateBookingStatus(${booking.id}, 'cancelled')">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        ` : ''}
+                        ${booking.status === 'confirmed' ? `
+                            <button class="action-btn complete-btn" onclick="updateBookingStatus(${booking.id}, 'completed')">
+                                <i class="fas fa-check-double"></i> Complete
+                            </button>
+                        ` : ''}
+                        <button class="action-btn view-btn" onclick="viewBookingDetails(${booking.id})">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Filter bookings
+        function filterBookings() {
+            const dateFilter = document.getElementById('dateFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const serviceFilter = document.getElementById('serviceFilter').value;
+
+            let filteredBookings = bookings;
+
+            if (dateFilter) {
+                filteredBookings = filteredBookings.filter(booking => booking.date === dateFilter);
+            }
+            if (statusFilter) {
+                filteredBookings = filteredBookings.filter(booking => booking.status === statusFilter);
+            }
+            if (serviceFilter) {
+                filteredBookings = filteredBookings.filter(booking => booking.service === serviceFilter);
+            }
+
+            displayBookings(filteredBookings);
+        }
+
+        // Update booking status
+        function updateBookingStatus(bookingId, newStatus) {
+            const booking = bookings.find(b => b.id === bookingId);
+            if (booking) {
+                booking.status = newStatus;
+                localStorage.setItem('salonBookings', JSON.stringify(bookings));
+                displayBookings();
+            }
+        }
+
+        // View booking details
+        function viewBookingDetails(bookingId) {
+            const booking = bookings.find(b => b.id === bookingId);
+            if (booking) {
+                const detailsHtml = `
+                    <div class="detail-group">
+                        <label>Client Name:</label>
+                        <span>${booking.clientName}</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>Email:</label>
+                        <span>${booking.clientEmail}</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>Phone:</label>
+                        <span>${booking.clientPhone}</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>Service:</label>
+                        <span>${booking.service}</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>Stylist:</label>
+                        <span>${booking.stylist}</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>Date & Time:</label>
+                        <span>${booking.date} ${booking.time}</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>Status:</label>
+                        <span class="status-badge status-${booking.status}">${booking.status}</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>Notes:</label>
+                        <span>${booking.notes || 'No notes'}</span>
+                    </div>
+                `;
+                document.getElementById('bookingDetails').innerHTML = detailsHtml;
+                document.getElementById('bookingModal').classList.add('active');
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        // Initialize page
+        window.onload = function() {
+            checkAuth();
+            populateServiceFilter();
+            displayBookings();
+        };
+    </script>
+</body>
+</html> 
