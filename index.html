@@ -6,6 +6,8 @@
     <title>Miles Unisex Salon - Beauty & Style</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    <link rel="stylesheet" href="public/css/styles.css">
+    <base href="/Miles_Saloon/">
     <style>
         * {
             margin: 0;
@@ -1017,73 +1019,65 @@
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <a href="index.html" class="logo">
-            <img src="images/logo.png" alt="Miles Unisex Salon Logo">
-            <span>Miles Unisex Salon</span>
-        </a>
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="booking.html">Book Now</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-
     <header class="header">
-        <h1>Welcome to Miles Unisex Salon</h1>
-        <p>Experience the art of beauty and style for everyone</p>
-        <a href="#booking" class="btn">Book Appointment</a>
+        <div class="nav-container">
+            <a href="/Miles_Saloon/" class="logo">Miles Salon</a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-links">
+                <a href="/Miles_Saloon/">Home</a>
+                <a href="/Miles_Saloon/public/services.html">Services</a>
+                <a href="/Miles_Saloon/public/gallery.html">Gallery</a>
+                <a href="/Miles_Saloon/public/contact.html">Contact</a>
+                <a href="/Miles_Saloon/public/booking.html" class="book-now">Book Now</a>
+            </nav>
+        </div>
     </header>
 
-    <section id="services" class="services">
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Miles Unisex Salon</h1>
+            <p>Experience the best in beauty and grooming services</p>
+            <div class="cta-buttons">
+                <a href="/Miles_Saloon/public/booking.html" class="button primary-button">Book Now</a>
+                <a href="/Miles_Saloon/public/services.html" class="button secondary-button">Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="section-header">
             <h2>Our Services</h2>
-        <div class="service-grid" id="servicesList">
+            <p>Discover our range of professional beauty services</p>
+        </div>
+        <div class="services-grid">
             <div class="service-card">
+                <img src="public/images/haircut.jpg" alt="Haircut Service">
                 <h3>Haircut & Styling</h3>
-                <p>Professional haircut and styling services for all hair types</p>
-                <div class="price">$30</div>
-                <a href="#booking" class="btn">Book Now</a>
+                <p>Professional haircut and styling for all hair types</p>
+                <span class="price">UGX 30,000</span>
+                <a href="/Miles_Saloon/public/booking.html?service=haircut" class="book-service">Book Now</a>
             </div>
             <div class="service-card">
+                <img src="public/images/coloring.jpg" alt="Hair Coloring">
                 <h3>Hair Coloring</h3>
-                <p>Full color, highlights, balayage, and other coloring services</p>
-                <div class="price">$75</div>
-                <a href="#booking" class="btn">Book Now</a>
+                <p>Full color, highlights, and premium coloring services</p>
+                <span class="price">UGX 50,000</span>
+                <a href="/Miles_Saloon/public/booking.html?service=coloring" class="book-service">Book Now</a>
             </div>
             <div class="service-card">
-                <h3>Hair Treatment</h3>
-                <p>Deep conditioning, keratin treatment, and hair repair services</p>
-                <div class="price">$50</div>
-                <a href="#booking" class="btn">Book Now</a>
+                <img src="public/images/facial.jpg" alt="Facial Treatment">
+                <h3>Facial Treatment</h3>
+                <p>Rejuvenating facial treatments for glowing skin</p>
+                <span class="price">UGX 45,000</span>
+                <a href="/Miles_Saloon/public/booking.html?service=facial" class="book-service">Book Now</a>
             </div>
-            <div class="service-card">
-                <h3>Special Occasion Styling</h3>
-                <p>Wedding, prom, and special event hair styling</p>
-                <div class="price">$65</div>
-                <a href="#booking" class="btn">Book Now</a>
-            </div>
-            <div class="service-card">
-                <h3>Beard Grooming</h3>
-                <p>Professional beard trimming and styling services</p>
-                <div class="price">$25</div>
-                <a href="#booking" class="btn">Book Now</a>
-            </div>
-            <div class="service-card">
-                <h3>Hair Extensions</h3>
-                <p>Premium quality hair extension services</p>
-                <div class="price">$150</div>
-                <a href="#booking" class="btn">Book Now</a>
-            </div>
+        </div>
+        <div class="text-center">
+            <a href="/Miles_Saloon/public/services.html" class="button secondary-button">View All Services</a>
         </div>
     </section>
 
@@ -1339,10 +1333,10 @@
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
-                <p><a href="index.html">Home</a></p>
-                <p><a href="services.html">Services</a></p>
-                <p><a href="gallery.html">Gallery</a></p>
-                <p><a href="booking.html">Book Now</a></p>
+                <p><a href="/Miles_Saloon/">Home</a></p>
+                <p><a href="/Miles_Saloon/public/services.html">Services</a></p>
+                <p><a href="/Miles_Saloon/public/gallery.html">Gallery</a></p>
+                <p><a href="/Miles_Saloon/public/booking.html">Book Now</a></p>
             </div>
             <div class="footer-section">
                 <h3>Contact Info</h3>
@@ -1372,10 +1366,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
         // Mobile Menu Toggle
-        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
 
-        menuToggle.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
 
