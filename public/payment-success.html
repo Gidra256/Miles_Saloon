@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - Miles Unisex Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f7f7f7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .success-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .success-icon {
+            color: #4CAF50;
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .booking-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .booking-details h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .detail-item strong {
+            color: #333;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .primary-button {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background: #45a049;
+        }
+
+        .secondary-button {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .secondary-button:hover {
+            background: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your payment. Your booking has been confirmed.</p>
+
+        <div class="booking-details">
+            <h2>Booking Details</h2>
+            <div class="detail-item">
+                <strong>Booking ID:</strong> <span id="booking-id"></span>
+            </div>
+            <div class="detail-item">
+                <strong>Service:</strong> <span id="service-name"></span>
+            </div>
+            <div class="detail-item">
+                <strong>Amount Paid:</strong> <span id="amount-paid"></span>
+            </div>
+            <div class="detail-item">
+                <strong>Date:</strong> <span id="booking-date"></span>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="/" class="button primary-button">Return to Home</a>
+            <a href="/bookings.html" class="button secondary-button">View Bookings</a>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Update booking details
+        document.getElementById('booking-id').textContent = urlParams.get('booking_id') || 'N/A';
+        document.getElementById('service-name').textContent = urlParams.get('service') || 'N/A';
+        document.getElementById('amount-paid').textContent = urlParams.get('amount') ? 
+            `$${(parseInt(urlParams.get('amount')) / 100).toFixed(2)}` : 'N/A';
+        document.getElementById('booking-date').textContent = urlParams.get('date') || 
+            new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+    </script>
+</body>
+</html> 
